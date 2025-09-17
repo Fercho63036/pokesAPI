@@ -1,4 +1,4 @@
-import { APIResource, Description, Effect, GenerationGameIndex, MachineVersionDetail, Name, NamedAPIResource, VerboseEffect, VersionGroupFlavorText } from "../comon/comon-typing";
+import { APIResource, Description, Effect, GenerationGameIndex, MachineVersionDetail, Name, NamedAPIResource, VerboseEffect, VersionGroupFlavorText } from "../../comon/interface/comon-typing";
 
 /*************************** Sprites de Objeto ***************************/
 /*************************** Sprites usados para representar el objeto dado en el juego. ***************************/

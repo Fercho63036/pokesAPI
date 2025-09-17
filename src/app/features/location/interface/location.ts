@@ -1,4 +1,4 @@
-import { GenerationGameIndex, Name, NamedAPIResource, VersionEncounterDetail } from "../comon/comon-typing";
+import { GenerationGameIndex, Name, NamedAPIResource, VersionEncounterDetail } from "../../comon/interface/comon-typing";
 
 /*************************** Ubicación ***************************/
 /*************************** Ubicaciones que se pueden visitar dentro de los juegos. ***************************/

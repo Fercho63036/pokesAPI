@@ -1,4 +1,4 @@
-import { Description, Name, NamedAPIResource } from "../comon/comon-typing";
+import { Description, Name, NamedAPIResource } from "../../comon/interface/comon-typing";
 
 /*************************** Generación ***************************/
 /*************************** Una generación es una agrupación de los juegos de Pokémon que se diferencian según los Pokémon que incluyen. ***************************/

@@ -1,4 +1,4 @@
-import { Name, NamedAPIResource } from "../comon/comon-typing";
+import { Name, NamedAPIResource } from "../../comon/interface/comon-typing";
 
 /*************************** Disparador de Evolución ***************************/
 /*************************** Los disparadores de evolución son los eventos y condiciones que hacen que un Pokémon evolucione. ***************************/

@@ -1,5 +1,4 @@
-
-import { Name, NamedAPIResource } from "../comon/comon-typing";
+import { Name, NamedAPIResource } from "../../comon/interface/comon-typing";
 
 /*************************** Método de Encuentro ***************************/
 /*************************** Métodos mediante los cuales el jugador puede encontrar Pokémon en estado salvaje ***************************/

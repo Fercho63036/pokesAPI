@@ -1,4 +1,4 @@
-import { Effect, FlavorText, NamedAPIResource } from "../comon/comon-typing";
+import { Effect, FlavorText, NamedAPIResource } from "../../comon/interface/comon-typing";
 
 /*************************** Tipo de Concurso ***************************/
 /*************************** Los tipos de concurso son categorías que los jueces utilizan para evaluar la condición de un Pokémon en los concursos Pokémon. ***************************/

@@ -1,5 +1,4 @@
-
-import { APIResource, Description, Effect, FlavorText, GenerationGameIndex, Name, NamedAPIResource, VerboseEffect, VersionEncounterDetail, VersionGameIndex } from "../comon/comon-typing";
+import { APIResource, Description, Effect, FlavorText, GenerationGameIndex, Name, NamedAPIResource, VerboseEffect, VersionEncounterDetail, VersionGameIndex } from "../../comon/interface/comon-typing";
 
 /*************************** Pokemon ***************************/
 /*************************** Los movimientos son las habilidades de Pokémon en la batalla. En la batalla, un Pokémon usa un movimiento en cada turno. Algunos movimientos (incluidos los aprendidos por Hidden Machine) también se pueden usar fuera de la batalla, generalmente con el propósito de eliminar obstáculos o explorar nuevas áreas. ***************************/
@@ -17,8 +16,9 @@ export interface Pokemon {
     held_items: PokemonHeldItem[];
     location_area_encounters: string;
     moves: PokemonMove[];
-    sprites: PokemonSprites;
     species: NamedAPIResource;
+    sprites: PokemonSprites;
+    cries: Cries;
     stats: PokemonStat[];
     types: PokemonType[];
 }
@@ -39,7 +39,7 @@ export interface PokemonType {
 /*************************** Objetos que el Pokémon puede estar sosteniendo cuando es encontrado. ***************************/
 export interface PokemonHeldItem {
     item: NamedAPIResource;
-    version_details: PokemonHeldItem[];
+    version_details: PokemonHeldItemVersion[];
 }
 /*************************** Versión del objeto Pokémon ***************************/
 /*************************** Detalles de las diferentes versiones del objeto. ***************************/
@@ -387,4 +387,9 @@ export interface Type {
     names: Name[];
     pokemon: TypePokemon[];
     moves: NamedAPIResource[];
+}
+
+export interface Cries {
+    latest: string;
+    legacy: string;
 }
