@@ -1,5 +1,5 @@
 import { APIResource, Description, MachineVersionDetail, Name, NamedAPIResource, VerboseEffect } from "../../comon/interface/comon-typing";
-import { AbilityEffectChange } from "../../pokemon/interface/pokemon";
+// import { AbilityEffectChange } from "../../pokemon/interface/pokemon";
 
 /*************************** MOVER OBJETIVOS ***************************/
 /*************************** Los movimientos de los objetivos se pueden dirigir durante la batalla. Los objetivos pueden ser Pokémon, entornos o incluso otros movimientos. ***************************/
@@ -121,7 +121,7 @@ export interface Move {
     contest_effect: APIResource;
     damage_class: NamedAPIResource;
     effect_entries: VerboseEffect[];
-    effect_changes: AbilityEffectChange[];
+    // effect_changes: AbilityEffectChange[];
     flavor_text_entries: MoveFlavorText[];
     generaton: NamedAPIResource;
     machines: MachineVersionDetail[];
