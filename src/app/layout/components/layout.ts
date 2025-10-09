@@ -8,13 +8,6 @@ import { AppTopbar } from "./topbar/topbar";
     selector: 'app-layout',
     standalone: true,
     imports: [CommonModule, RouterModule, AppFooter, AppTopbar ],
-    template:
-    `
-    <app-topbar></app-topbar>
-    <h1>Este es un tipo</h1>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-    `
+    templateUrl: './layout.html',
 })
-export class AppLayout {
-}
+export class AppLayout {}
