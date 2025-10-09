@@ -3,11 +3,11 @@ import {Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'app-encabezado',
+    selector: 'app-topbar',
     standalone: true,
     imports: [RouterModule, CommonModule],
-    templateUrl: './encabezado.html',
+    templateUrl: './topbar.html',
 })
-export class AppEncabezado {
+export class AppTopbar {
     
 }

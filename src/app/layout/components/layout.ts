@@ -1,14 +1,18 @@
 import { CommonModule } from "@angular/common";
 import { Component, OnDestroy } from "@angular/core";
-import { RouterLink, RouterModule } from "@angular/router";
+import { RouterModule } from "@angular/router";
+import { AppFooter } from "./footer/footer";
+import { AppTopbar } from "./topbar/topbar";
 
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, RouterModule, RouterLink ],
+    imports: [CommonModule, RouterModule, AppFooter, AppTopbar ],
     template:
     `
+    <app-topbar></app-topbar>
     <h1>Este es un tipo</h1>
+    <app-footer></app-footer>
     `
 })
 export class AppLayout implements OnDestroy {
