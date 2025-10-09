@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnDestroy } from "@angular/core";
+import { Component } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { AppFooter } from "./footer/footer";
 import { AppTopbar } from "./topbar/topbar";
@@ -12,12 +12,9 @@ import { AppTopbar } from "./topbar/topbar";
     `
     <app-topbar></app-topbar>
     <h1>Este es un tipo</h1>
+    <router-outlet></router-outlet>
     <app-footer></app-footer>
     `
 })
-export class AppLayout implements OnDestroy {
-    ngOnDestroy(): void {
-        throw new Error("Method not implemented.");
-    }
-
+export class AppLayout {
 }
