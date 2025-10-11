@@ -54,10 +54,10 @@ export const routes: Routes = [
 //     path: 'ubicaciones',
 //     loadChildren: () => import('./features/ubicaciones/ubicaciones.routes').then(m => m.UBICACIONES_ROUTES)
 //   },
-//   {
-//     path: 'generaciones',
-//     loadChildren: () => import('./features/generaciones/generaciones.routes').then(m => m.GENERACIONES_ROUTES)
-//   },
+    {
+        path: 'generaciones',
+        loadChildren: () => import('./features/generaciones/generaciones.route').then(m => m.GENERACIONES_ROUTES)
+    },
 //   {
 //     path: 'favoritos',
 //     loadChildren: () => import('./features/favoritos/favoritos.routes').then(m => m.FAVORITOS_ROUTES)
