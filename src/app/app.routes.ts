@@ -14,10 +14,10 @@ export const routes: Routes = [
 //     path: 'pokemon/:id',
 //     loadChildren: () => import('./features/detalle-pokemon/detalle-pokemon.routes').then(m => m.DETALLE_POKEMON_ROUTES)
 //   },
-//   {
-//     path: 'tipos',
-//     loadChildren: () => import('./features/explorador-tipos/explorador-tipos.routes').then(m => m.EXPLORADOR_TIPOS_ROUTES)
-//   },
+    {
+        path: 'tipos',
+        loadChildren: () => import('./features/explorador-tipos/explorador-tipos.route').then(m => m.EXPLORADOR_TIPOS_ROUTES)
+    },
     {
         path: 'calculadora-combate',
         loadChildren: () => import('./features/calculadora-combate/calculadora-combate.routes').then(m => m.CALCULADORA_COMBATE_ROUTES)
