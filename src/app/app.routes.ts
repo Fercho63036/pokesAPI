@@ -26,10 +26,10 @@ export const routes: Routes = [
 //     path: 'evoluciones',
 //     loadChildren: () => import('./features/cadenas-evolutivas/cadenas-evolutivas.routes').then(m => m.CADENAS_EVOLUTIVAS_ROUTES)
 //   },
-//   {
-//     path: 'habilidades',
-//     loadChildren: () => import('./features/habilidades/habilidades.routes').then(m => m.HABILIDADES_ROUTES)
-//   },
+  {
+    path: 'habilidades',
+    loadChildren: () => import('./features/habilidades/habilidades.routes').then(m => m.HABILIDADES_ROUTES)
+  },
     {
         path: 'movimientos',
         loadChildren: () => import('./features/movimientos/movimientos.routes').then(m => m.MOVIMIENTOS_ROUTES)
