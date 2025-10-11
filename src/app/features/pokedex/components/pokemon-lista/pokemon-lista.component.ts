@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { PokeService } from '../../services/pokemon.service';
-
 
 @Component({
-  selector: 'app-poke-list',
+  selector: 'app-pokemon-lista',
   standalone: true,
   imports: [
     CommonModule
-],
-  providers: [PokeService],
-  templateUrl: './pokemon-list.component.html',
+  ],
+  templateUrl: './pokemon-lista.component.html',
 })
-export class PokeListComponent implements OnInit {
+export class PokemonListaComponent implements OnInit {
 
     ngOnInit(): void {
         throw new Error('Method not implemented.');
