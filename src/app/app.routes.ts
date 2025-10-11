@@ -30,10 +30,10 @@ export const routes: Routes = [
 //     path: 'habilidades',
 //     loadChildren: () => import('./features/habilidades/habilidades.routes').then(m => m.HABILIDADES_ROUTES)
 //   },
-//   {
-//     path: 'movimientos',
-//     loadChildren: () => import('./features/movimientos/movimientos.routes').then(m => m.MOVIMIENTOS_ROUTES)
-//   },
+    {
+        path: 'movimientos',
+        loadChildren: () => import('./features/movimientos/movimientos.routes').then(m => m.MOVIMIENTOS_ROUTES)
+    },
 //   {
 //     path: 'regiones',
 //     loadChildren: () => import('./features/regiones/regiones.routes').then(m => m.REGIONES_ROUTES)
