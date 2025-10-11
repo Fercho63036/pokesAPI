@@ -3,8 +3,8 @@ import { MovmientosComponent } from './components/movimientos/movimientos.compon
 
 
 export const MOVIMIENTOS_ROUTES: Routes = [
-  {
-    path: '',
-    component: MovmientosComponent
-  }
+    {
+        path: '',
+        component: MovmientosComponent
+    }
 ];

@@ -38,10 +38,10 @@ export const routes: Routes = [
 //     path: 'regiones',
 //     loadChildren: () => import('./features/regiones/regiones.routes').then(m => m.REGIONES_ROUTES)
 //   },
-//   {
-//     path: 'objetos',
-//     loadChildren: () => import('./features/objetos/objetos.routes').then(m => m.OBJETOS_ROUTES)
-//   },
+    {
+        path: 'objetos',
+        loadChildren: () => import('./features/objetos/objetos.routes').then(m => m.OBJETOS_ROUTES)
+    },
 //   {
 //     path: 'equipos',
 //     loadChildren: () => import('./features/constructor-equipos/constructor-equipos.routes').then(m => m.CONSTRUCTOR_EQUIPOS_ROUTES)
