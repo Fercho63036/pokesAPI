@@ -34,10 +34,10 @@ export const routes: Routes = [
         path: 'movimientos',
         loadChildren: () => import('./features/movimientos/movimientos.routes').then(m => m.MOVIMIENTOS_ROUTES)
     },
-//   {
-//     path: 'regiones',
-//     loadChildren: () => import('./features/regiones/regiones.routes').then(m => m.REGIONES_ROUTES)
-//   },
+    {
+        path: 'regiones',
+        loadChildren: () => import('./features/regiones/regiones.routes').then(m => m.REGIONES_ROUTES)
+    },
     {
         path: 'objetos',
         loadChildren: () => import('./features/objetos/objetos.routes').then(m => m.OBJETOS_ROUTES)
