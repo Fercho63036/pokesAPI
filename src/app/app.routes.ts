@@ -22,14 +22,14 @@ export const routes: Routes = [
         path: 'calculadora-combate',
         loadChildren: () => import('./features/calculadora-combate/calculadora-combate.routes').then(m => m.CALCULADORA_COMBATE_ROUTES)
     },
-//   {
-//     path: 'evoluciones',
-//     loadChildren: () => import('./features/cadenas-evolutivas/cadenas-evolutivas.routes').then(m => m.CADENAS_EVOLUTIVAS_ROUTES)
-//   },
-  {
-    path: 'habilidades',
-    loadChildren: () => import('./features/habilidades/habilidades.routes').then(m => m.HABILIDADES_ROUTES)
-  },
+    {
+        path: 'evoluciones',
+        loadChildren: () => import('./features/cadenas-evolutivas/cadenas-evolutiva.routes').then(m => m.CADENAS_EVOLUTIVAS_ROUTES)
+    },
+    {
+        path: 'habilidades',
+        loadChildren: () => import('./features/habilidades/habilidades.routes').then(m => m.HABILIDADES_ROUTES)
+    },
     {
         path: 'movimientos',
         loadChildren: () => import('./features/movimientos/movimientos.routes').then(m => m.MOVIMIENTOS_ROUTES)
@@ -42,18 +42,18 @@ export const routes: Routes = [
         path: 'objetos',
         loadChildren: () => import('./features/objetos/objetos.routes').then(m => m.OBJETOS_ROUTES)
     },
-//   {
-//     path: 'equipos',
-//     loadChildren: () => import('./features/constructor-equipos/constructor-equipos.routes').then(m => m.CONSTRUCTOR_EQUIPOS_ROUTES)
-//   },
+    {
+        path: 'equipos',
+        loadChildren: () => import('./features/constructor-equipos/constructor-equipos.route').then(m => m.CONSTRUCTOR_EQUIPOS_ROUTES)
+    },
     {
         path: 'bayas',
         loadChildren: () => import('./features/bayas/bayas.routes').then(m => m.BAYAS_ROUTES)
     },
-//   {
-//     path: 'ubicaciones',
-//     loadChildren: () => import('./features/ubicaciones/ubicaciones.routes').then(m => m.UBICACIONES_ROUTES)
-//   },
+    {
+        path: 'ubicaciones',
+        loadChildren: () => import('./features/ubicaciones/ubicaciones.routes').then(m => m.UBICACIONES_ROUTES)
+    },
     {
         path: 'generaciones',
         loadChildren: () => import('./features/generaciones/generaciones.route').then(m => m.GENERACIONES_ROUTES)
