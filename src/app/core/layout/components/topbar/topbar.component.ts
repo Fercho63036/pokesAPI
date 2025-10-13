@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
     selector: 'app-topbar',
     standalone: true,
     imports: [RouterModule, CommonModule],
-    templateUrl: './topbar.html',
+    templateUrl: './topbar.component.html',
 })
-export class AppTopbar {
+export class AppTopbarComponent {
     
 }

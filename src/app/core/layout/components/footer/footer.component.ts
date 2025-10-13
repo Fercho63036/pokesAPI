@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
     selector: 'app-footer',
     standalone: true,
     imports: [RouterModule, CommonModule],
-    templateUrl: './footer.html',
+    templateUrl: './footer.component.html',
 })
-export class AppFooter {
+export class AppFooterComponent {
     
 }
