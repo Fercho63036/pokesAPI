@@ -58,10 +58,10 @@ export const routes: Routes = [
         path: 'generaciones',
         loadChildren: () => import('./features/generaciones/generaciones.route').then(m => m.GENERACIONES_ROUTES)
     },
-//   {
-//     path: 'favoritos',
-//     loadChildren: () => import('./features/favoritos/favoritos.routes').then(m => m.FAVORITOS_ROUTES)
-//   },
+    {
+        path: 'favoritos',
+        loadChildren: () => import('./features/favoritos/favoritos.route').then(m => m.FAVORITOS_ROUTES)
+    },
     {
         path: '**',
         redirectTo: '/pokedex'
