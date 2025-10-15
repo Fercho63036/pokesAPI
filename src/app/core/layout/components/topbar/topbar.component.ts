@@ -8,6 +8,6 @@ import { RouterModule } from '@angular/router';
     imports: [RouterModule, CommonModule],
     templateUrl: './topbar.component.html',
 })
-export class AppTopbarComponent {
+export class AppTopbarComponent{
     
 }
