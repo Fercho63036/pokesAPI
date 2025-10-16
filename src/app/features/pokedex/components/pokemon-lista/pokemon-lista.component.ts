@@ -12,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 export class PokemonListaComponent implements OnInit {
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        // Aquí va tu lógica de inicialización
+        console.log('Componente Pokemon Lista inicializado');
     }
     
 }
