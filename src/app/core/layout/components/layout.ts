@@ -7,7 +7,7 @@ import { AppFooterComponent } from "./footer/footer.component";
 @Component({
     selector: 'app-layout',
     standalone: true,
-    imports: [CommonModule, RouterModule, AppFooterComponent, AppTopbarComponent ],
+    imports: [CommonModule, RouterModule, AppFooterComponent, AppTopbarComponent],
     templateUrl: './layout.html',
 })
 export class AppLayout {}

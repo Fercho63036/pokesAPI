@@ -1,13 +1,13 @@
+// footer/footer.component.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
 
 @Component({
-    selector: 'app-footer',
-    standalone: true,
-    imports: [RouterModule, CommonModule],
-    templateUrl: './footer.component.html',
+  selector: 'app-footer',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './footer.component.html',
 })
 export class AppFooterComponent {
-    
+  anioActual = new Date().getFullYear();
 }

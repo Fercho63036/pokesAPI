@@ -1,1 +1,49 @@
-<div>Pie-Pagina</div>
+<!-- footer/footer.component.html -->
+<div class="container mx-auto px-4 py-6 md:px-6 lg:px-8">
+  <div class="flex flex-col gap-6 md:flex-row md:justify-between md:items-center">
+    <!-- Información -->
+    <div class="flex flex-col gap-2">
+      <p class="text-sm font-semibold text-foreground">Pokédex App</p>
+      <p class="text-xs text-muted-foreground">
+        Explorador de Pokémons con datos de PokéAPI
+      </p>
+    </div>
+
+    <!-- Enlaces -->
+    <div class="flex flex-wrap gap-4 md:gap-6">
+      <a 
+        href="https://pokeapi.co/" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        PokéAPI
+      </a>
+      <a 
+        href="#" 
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        Privacidad
+      </a>
+      <a 
+        href="#" 
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        Términos
+      </a>
+      <a 
+        href="#" 
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        Contacto
+      </a>
+    </div>
+  </div>
+
+  <!-- Copyright -->
+  <div class="mt-6 pt-6 border-t border-border">
+    <p class="text-xs text-center text-muted-foreground">
+      © {{ anioActual }} Pokédex App. Todos los derechos reservados.
+    </p>
+  </div>
+</div>
