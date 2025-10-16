@@ -1,90 +1,163 @@
-<header class="bg-white dark:bg-gray-800 shadow-md transition-colors duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-      
-      <!-- Logo / Título -->
-      <div class="flex items-center">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-          Mi Aplicación
-        </h1>
-      </div>
-
-      <!-- Navegación Central -->
-      <nav class="hidden md:flex space-x-8">
-        <a 
-          routerLink="/inicio" 
-          routerLinkActive="text-blue-600 dark:text-blue-400"
-          class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-          Inicio
-        </a>
-        <a 
-          routerLink="/productos" 
-          routerLinkActive="text-blue-600 dark:text-blue-400"
-          class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-          Productos
-        </a>
-        <a 
-          routerLink="/servicios" 
-          routerLinkActive="text-blue-600 dark:text-blue-400"
-          class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
-          Servicios
-        </a>
-      </nav>
-
-      <!-- Botón de Tema y Acciones -->
-      <div class="flex items-center space-x-4">
-        
-        <!-- Botón de Cambio de Tema -->
-        <button
-          (click)="alternarTema()"
-          class="relative p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
-          [attr.aria-label]="temaService.temaOscuro() ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro'">
-          
-          <!-- Icono Sol (Tema Claro) -->
-          <svg 
-            *ngIf="!temaService.temaOscuro()"
-            class="w-5 h-5 text-yellow-500 transition-transform duration-300 hover:rotate-180" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24">
-            <path 
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
-              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
-            </path>
-          </svg>
-
-          <!-- Icono Luna (Tema Oscuro) -->
-          <svg 
-            *ngIf="temaService.temaOscuro()"
-            class="w-5 h-5 text-blue-400 transition-transform duration-300 hover:rotate-12" 
-            fill="none" 
-            stroke="currentColor" 
-            viewBox="0 0 24 24">
-            <path 
-              stroke-linecap="round" 
-              stroke-linejoin="round" 
-              stroke-width="2" 
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z">
-            </path>
-          </svg>
-        </button>
-
-        <!-- Botón de Usuario -->
-        <button class="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-          <svg class="w-5 h-5 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-          </svg>
-        </button>
-
-        <!-- Botón Menú Móvil -->
-        <button class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-          <svg class="w-6 h-6 text-gray-700 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
+<!-- topbar/topbar.component.html -->
+<nav class="flex h-16 items-center justify-between px-4 md:px-6">
+  <!-- Logo y título -->
+  <div class="flex items-center gap-4">
+    <a 
+      routerLink="/" 
+      (click)="cerrarMenus()"
+      class="flex items-center gap-2 font-bold text-xl text-foreground hover:text-primary transition-colors"
+    >
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+        <circle cx="12" cy="12" r="10" class="text-primary" />
+        <circle cx="12" cy="12" r="4" class="text-background" />
+      </svg>
+      <span class="hidden sm:inline">Pokédex</span>
+    </a>
   </div>
-</header>
+
+  <!-- Navegación desktop -->
+  <div class="hidden md:flex items-center gap-6">
+    <a 
+      routerLink="/pokemons" 
+      routerLinkActive="text-primary font-semibold"
+      [routerLinkActiveOptions]="{exact: false}"
+      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+    >
+      Pokémons
+    </a>
+    <a 
+      routerLink="/favoritos" 
+      routerLinkActive="text-primary font-semibold"
+      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+    >
+      Favoritos
+    </a>
+    <a 
+      routerLink="/acerca-de" 
+      routerLinkActive="text-primary font-semibold"
+      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+    >
+      Acerca de
+    </a>
+  </div>
+
+  <!-- Acciones -->
+  <div class="flex items-center gap-2">
+    <!-- Selector de tema con menú desplegable -->
+    <div class="relative">
+      <button
+        (click)="alternarMenuTema()"
+        class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+        [attr.aria-label]="'Cambiar tema: ' + servicioTema.obtenerNombreTemaActual()"
+        [attr.aria-expanded]="menuTemaAbierto()"
+      >
+        @if (servicioTema.temaOscuro()) {
+          <!-- Icono Luna (Tema Oscuro) -->
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+          </svg>
+        } @else {
+          <!-- Icono Sol (Tema Claro) -->
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          </svg>
+        }
+      </button>
+
+      <!-- Menú desplegable de temas -->
+      @if (menuTemaAbierto()) {
+        <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-card border border-border overflow-hidden z-50">
+          <div class="py-1">
+            <button
+              (click)="seleccionarTema('claro')"
+              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'claro'"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <span>Tema Claro</span>
+            </button>
+            
+            <button
+              (click)="seleccionarTema('oscuro')"
+              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'oscuro'"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+              <span>Tema Oscuro</span>
+            </button>
+            
+            <button
+              (click)="seleccionarTema('sistema')"
+              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'sistema'"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+              <span>Sistema</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Menú hamburguesa (móvil) -->
+    <button
+      (click)="alternarMenu()"
+      class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground md:hidden transition-colors"
+      [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
+      [attr.aria-expanded]="menuAbierto()"
+    >
+      @if (!menuAbierto()) {
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      } @else {
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      }
+    </button>
+  </div>
+</nav>
+
+<!-- Menú móvil -->
+@if (menuAbierto()) {
+  <div class="border-t border-border md:hidden">
+    <nav class="flex flex-col gap-1 p-4">
+      <a 
+        routerLink="/pokemons" 
+        routerLinkActive="bg-accent text-accent-foreground"
+        (click)="cerrarMenus()"
+        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+      >
+        Pokémons
+      </a>
+      <a 
+        routerLink="/favoritos" 
+        routerLinkActive="bg-accent text-accent-foreground"
+        (click)="cerrarMenus()"
+        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+      >
+        Favoritos
+      </a>
+      <a 
+        routerLink="/acerca-de" 
+        routerLinkActive="bg-accent text-accent-foreground"
+        (click)="cerrarMenus()"
+        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+      >
+        Acerca de
+      </a>
+    </nav>
+  </div>
+}
