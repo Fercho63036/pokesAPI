@@ -9,8 +9,7 @@ export const routes: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: '/pokedex',
-                pathMatch: 'full'
+                loadChildren: () => import('./features/inicio/inicio.routes').then(m => m.INICIO_ROUTES)
             },
             {
                 path: 'pokedex',
