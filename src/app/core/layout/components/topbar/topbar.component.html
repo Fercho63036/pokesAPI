@@ -1,9 +1,22 @@
 <nav class="flex h-16 items-center justify-between px-6">
-  <!-- Logo y título -->
+  <!-- Botón izquierdo -->
+  <div>
+    <button
+      class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+      aria-label="Menú"
+    >
+      <!-- Icono de menú hamburguesa -->
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+              d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Logo y título (centro) -->
   <div class="flex items-center gap-4">
     <a 
       routerLink="/" 
-      (click)="cerrarMenus()"
       class="flex items-center gap-2 font-bold text-xl text-foreground hover:text-primary transition-colors"
     >
       <svg class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
@@ -14,15 +27,14 @@
     </a>
   </div>
   
-  <!-- Selector de tema con menú desplegable -->
-  <div class="relative">
+  <!-- Botón de tema (derecha) -->
+  <div>
     <button
-      (click)="alternarMenuTema()"
+      (click)="alternarTema()"
       class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-      [attr.aria-label]="'Cambiar tema: ' + servicioTema.obtenerNombreTemaActual()"
-      [attr.aria-expanded]="menuTemaAbierto()"
+      aria-label="Cambiar tema"
     >
-      @if (servicioTema.temaOscuro()) {
+      @if (temaOscuro()) {
         <!-- Icono Luna (Tema Oscuro) -->
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
@@ -36,48 +48,5 @@
         </svg>
       }
     </button>
-
-    <!-- Menú desplegable de temas -->
-    @if (menuTemaAbierto()) {
-      <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-card border border-border overflow-hidden z-50">
-        <div class="py-1">
-          <button
-            (click)="seleccionarTema('claro')"
-            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'claro'"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            </svg>
-            <span>Tema Claro</span>
-          </button>
-          
-          <button
-            (click)="seleccionarTema('oscuro')"
-            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'oscuro'"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-            </svg>
-            <span>Tema Oscuro</span>
-          </button>
-          
-          <button
-            (click)="seleccionarTema('sistema')"
-            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'sistema'"
-          >
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            <span>Sistema</span>
-          </button>
-        </div>
-      </div>
-    }
   </div>
 </nav>
