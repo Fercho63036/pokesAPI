@@ -1,5 +1,4 @@
-<!-- topbar/topbar.component.html -->
-<nav class="flex h-16 items-center justify-between px-4 md:px-6">
+<nav class="flex h-16 items-center justify-between px-6">
   <!-- Logo y título -->
   <div class="flex items-center gap-4">
     <a 
@@ -11,153 +10,74 @@
         <circle cx="12" cy="12" r="10" class="text-primary" />
         <circle cx="12" cy="12" r="4" class="text-background" />
       </svg>
-      <span class="hidden sm:inline">Pokédex</span>
+      <span>Pokédex</span>
     </a>
   </div>
-
-  <!-- Navegación desktop -->
-  <div class="hidden md:flex items-center gap-6">
-    <a 
-      routerLink="/pokemons" 
-      routerLinkActive="text-primary font-semibold"
-      [routerLinkActiveOptions]="{exact: false}"
-      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-    >
-      Pokémons
-    </a>
-    <a 
-      routerLink="/favoritos" 
-      routerLinkActive="text-primary font-semibold"
-      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-    >
-      Favoritos
-    </a>
-    <a 
-      routerLink="/acerca-de" 
-      routerLinkActive="text-primary font-semibold"
-      class="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-    >
-      Acerca de
-    </a>
-  </div>
-
-  <!-- Acciones -->
-  <div class="flex items-center gap-2">
-    <!-- Selector de tema con menú desplegable -->
-    <div class="relative">
-      <button
-        (click)="alternarMenuTema()"
-        class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-        [attr.aria-label]="'Cambiar tema: ' + servicioTema.obtenerNombreTemaActual()"
-        [attr.aria-expanded]="menuTemaAbierto()"
-      >
-        @if (servicioTema.temaOscuro()) {
-          <!-- Icono Luna (Tema Oscuro) -->
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        } @else {
-          <!-- Icono Sol (Tema Claro) -->
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-        }
-      </button>
-
-      <!-- Menú desplegable de temas -->
-      @if (menuTemaAbierto()) {
-        <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-card border border-border overflow-hidden z-50">
-          <div class="py-1">
-            <button
-              (click)="seleccionarTema('claro')"
-              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'claro'"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-              </svg>
-              <span>Tema Claro</span>
-            </button>
-            
-            <button
-              (click)="seleccionarTema('oscuro')"
-              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'oscuro'"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-              <span>Tema Oscuro</span>
-            </button>
-            
-            <button
-              (click)="seleccionarTema('sistema')"
-              class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
-              [class.bg-accent]="servicioTema.preferenciaUsuario() === 'sistema'"
-            >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-              <span>Sistema</span>
-            </button>
-          </div>
-        </div>
-      }
-    </div>
-
-    <!-- Menú hamburguesa (móvil) -->
+  
+  <!-- Selector de tema con menú desplegable -->
+  <div class="relative">
     <button
-      (click)="alternarMenu()"
-      class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground md:hidden transition-colors"
-      [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'"
-      [attr.aria-expanded]="menuAbierto()"
+      (click)="alternarMenuTema()"
+      class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+      [attr.aria-label]="'Cambiar tema: ' + servicioTema.obtenerNombreTemaActual()"
+      [attr.aria-expanded]="menuTemaAbierto()"
     >
-      @if (!menuAbierto()) {
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      @if (servicioTema.temaOscuro()) {
+        <!-- Icono Luna (Tema Oscuro) -->
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
         </svg>
       } @else {
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <!-- Icono Sol (Tema Claro) -->
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
         </svg>
       }
     </button>
+
+    <!-- Menú desplegable de temas -->
+    @if (menuTemaAbierto()) {
+      <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-card border border-border overflow-hidden z-50">
+        <div class="py-1">
+          <button
+            (click)="seleccionarTema('claro')"
+            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'claro'"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+            <span>Tema Claro</span>
+          </button>
+          
+          <button
+            (click)="seleccionarTema('oscuro')"
+            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'oscuro'"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+            </svg>
+            <span>Tema Oscuro</span>
+          </button>
+          
+          <button
+            (click)="seleccionarTema('sistema')"
+            class="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-accent transition-colors"
+            [class.bg-accent]="servicioTema.preferenciaUsuario() === 'sistema'"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <span>Sistema</span>
+          </button>
+        </div>
+      </div>
+    }
   </div>
 </nav>
-
-<!-- Menú móvil -->
-@if (menuAbierto()) {
-  <div class="border-t border-border md:hidden">
-    <nav class="flex flex-col gap-1 p-4">
-      <a 
-        routerLink="/pokemons" 
-        routerLinkActive="bg-accent text-accent-foreground"
-        (click)="cerrarMenus()"
-        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-      >
-        Pokémons
-      </a>
-      <a 
-        routerLink="/favoritos" 
-        routerLinkActive="bg-accent text-accent-foreground"
-        (click)="cerrarMenus()"
-        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-      >
-        Favoritos
-      </a>
-      <a 
-        routerLink="/acerca-de" 
-        routerLinkActive="bg-accent text-accent-foreground"
-        (click)="cerrarMenus()"
-        class="px-4 py-2 rounded-md text-sm font-medium text-muted-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
-      >
-        Acerca de
-      </a>
-    </nav>
-  </div>
-}
