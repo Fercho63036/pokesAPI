@@ -1,10 +1,6 @@
 <nav class="w-full border-b border-border bg-card">
   <div class="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8">
-    
-    <!-- Versión Desktop (md en adelante) - Siempre visible -->
-    <div class="hidden md:flex items-center justify-between gap-1 py-3">
-      
-      <!-- Inicio -->
+    <div class="hidden md:flex items-center justify-between gap-1 py-3">      
       <a 
         routerLink="/"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -16,8 +12,6 @@
         </svg>
         <span>Inicio</span>
       </a>
-
-      <!-- Pokédex -->
       <a 
         routerLink="/pokedex"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -28,8 +22,6 @@
         </svg>
         <span>Pokédex</span>
       </a>
-
-      <!-- Tipos -->
       <a 
         routerLink="/tipos"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -40,8 +32,6 @@
         </svg>
         <span>Tipos</span>
       </a>
-
-      <!-- Habilidades -->
       <a 
         routerLink="/habilidades"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -52,8 +42,6 @@
         </svg>
         <span>Habilidades</span>
       </a>
-
-      <!-- Regiones -->
       <a 
         routerLink="/regiones"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -64,8 +52,6 @@
         </svg>
         <span>Regiones</span>
       </a>
-
-      <!-- Movimientos -->
       <a 
         routerLink="/movimientos"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -77,8 +63,6 @@
         </svg>
         <span>Movimientos</span>
       </a>
-
-      <!-- Favoritos -->
       <a 
         routerLink="/favoritos"
         routerLinkActive="bg-primary text-primary-foreground"
@@ -89,12 +73,8 @@
         </svg>
         <span>Favoritos</span>
       </a>
-
     </div>
-
-    <!-- Versión Mobile (menos de md) - Botón hamburguesa -->
     <div class="md:hidden">
-      <!-- Botón toggle del menú -->
       <div class="flex items-center justify-center py-2">
         <button 
           (click)="toggleMenu()"
@@ -104,23 +84,17 @@
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             @if (menuAbierto()) {
-              <!-- Icono X (cerrar) -->
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             } @else {
-              <!-- Icono hamburguesa (abrir) -->
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             }
           </svg>
           <span>{{ menuAbierto() ? 'Cerrar Menú' : 'Abrir Menú' }}</span>
         </button>
       </div>
-
-      <!-- Menú desplegable -->
       @if (menuAbierto()) {
         <div class="border-t border-border bg-card/50 backdrop-blur-sm">
-          <div class="grid grid-cols-2 gap-2 p-3">
-            
-            <!-- Inicio Mobile -->
+          <div class="grid grid-cols-2 gap-2 p-3">            
             <a 
               routerLink="/"
               (click)="cerrarMenu()"
@@ -133,8 +107,6 @@
               </svg>
               <span>Inicio</span>
             </a>
-
-            <!-- Pokédex Mobile -->
             <a 
               routerLink="/pokedex"
               (click)="cerrarMenu()"
@@ -146,8 +118,6 @@
               </svg>
               <span>Pokédex</span>
             </a>
-
-            <!-- Tipos Mobile -->
             <a 
               routerLink="/tipos"
               (click)="cerrarMenu()"
@@ -159,8 +129,6 @@
               </svg>
               <span>Tipos</span>
             </a>
-
-            <!-- Habilidades Mobile -->
             <a 
               routerLink="/habilidades"
               (click)="cerrarMenu()"
@@ -172,8 +140,6 @@
               </svg>
               <span>Habilidades</span>
             </a>
-
-            <!-- Regiones Mobile -->
             <a 
               routerLink="/regiones"
               (click)="cerrarMenu()"
@@ -185,8 +151,6 @@
               </svg>
               <span>Regiones</span>
             </a>
-
-            <!-- Movimientos Mobile -->
             <a 
               routerLink="/movimientos"
               (click)="cerrarMenu()"
@@ -199,8 +163,6 @@
               </svg>
               <span>Movimientos</span>
             </a>
-
-            <!-- Favoritos Mobile -->
             <a 
               routerLink="/favoritos"
               (click)="cerrarMenu()"
@@ -217,6 +179,5 @@
         </div>
       }
     </div>
-
   </div>
 </nav>
