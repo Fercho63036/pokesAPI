@@ -1,16 +1,19 @@
-<div class="flex flex-col min-h-screen bg-background">
-    <header class="sticky top-0 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/60">
+<div class="flex flex-col min-h-screen bg-gray-50">
+    <!-- Header: fondo rojo, sin borde inferior porque navbar ya lo tiene -->
+    <header class="sticky top-0 w-full bg-red-500 shadow-md z-50">
         <app-topbar></app-topbar>
         <app-navbar></app-navbar>
     </header>
             
-    <main class="flex-1 w-full">
+    <!-- Main: fondo claro para contraste -->
+    <main class="flex-1 w-full bg-white">
         <div class="container mx-auto px-4 py-6 md:px-6 lg:px-8">
             <router-outlet></router-outlet>
         </div>
     </main>
             
-    <footer class="w-full border-t border-border bg-card mt-auto">
+    <!-- Footer: fondo rojo igual que header -->
+    <footer class="w-full bg-red-500 border-t border-red-600 mt-auto">
         <app-footer></app-footer>
     </footer>
 </div>
