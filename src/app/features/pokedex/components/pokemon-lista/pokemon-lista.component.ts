@@ -17,8 +17,9 @@ export class PokemonListaComponent implements OnInit {
   }
     
   constructor(
-    // private pokemonServicio: PokemonService
+    private pokemonServicio: PokemonService
   ){}
 
+  
 
 }
