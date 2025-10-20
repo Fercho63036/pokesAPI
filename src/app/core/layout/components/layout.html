@@ -1,18 +1,18 @@
 <div class="flex flex-col min-h-screen bg-gray-50">
-    <!-- Header: fondo rojo, sin borde inferior porque navbar ya lo tiene -->
+    <!-- Header con posición sticky -->
     <header class="sticky top-0 w-full bg-red-500 shadow-md z-50">
         <app-topbar></app-topbar>
         <app-navbar></app-navbar>
     </header>
-            
-    <!-- Main: fondo claro para contraste -->
-    <main class="flex-1 w-full bg-white">
-        <div class="container mx-auto px-4 py-6 md:px-6 lg:px-8">
+    
+    <!-- Main content area que se expande -->
+    <main class="flex-1 w-full">
+        <div class="container mx-auto px-4 py-6 md:px-6 lg:px-8 max-w-7xl">
             <router-outlet></router-outlet>
         </div>
     </main>
-            
-    <!-- Footer: fondo rojo igual que header -->
+    
+    <!-- Footer que se mantiene abajo -->
     <footer class="w-full bg-red-500 border-t border-red-600 mt-auto">
         <app-footer></app-footer>
     </footer>

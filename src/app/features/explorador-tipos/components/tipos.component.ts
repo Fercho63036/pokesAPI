@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class TiposComponent implements OnInit {
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        console.log('Componente de tipos');
     }
     
 }

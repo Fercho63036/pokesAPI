@@ -14,7 +14,7 @@ import { TarjetaBayaComponent } from '../tarjeta-baya/tarjeta-baya.component';
 export class ListaBayasComponent implements OnInit {
 
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+      console.log('Componente de Lista de bayas');
     }
     
 }
