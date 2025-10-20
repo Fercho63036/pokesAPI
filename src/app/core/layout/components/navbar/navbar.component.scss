@@ -1,0 +1,47 @@
+// Animación de slide down para el menú móvil
+.menu-slide-down {
+  animation: slideDown 300ms ease-out forwards;
+  transform-origin: top;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scaleY(0.95);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scaleY(1);
+    max-height: 1000px; // Ajusta según tu contenido
+  }
+}
+
+// Animación de fade in (que ya usabas)
+.animate-fadeIn {
+  animation: fadeIn 200ms ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Opcional: animación de salida suave
+@media (prefers-reduced-motion: no-preference) {
+  .menu-slide-down {
+    transition: opacity 200ms ease-in, transform 200ms ease-in;
+  }
+}
+
+// Accesibilidad: respetar preferencias de movimiento reducido
+@media (prefers-reduced-motion: reduce) {
+  .menu-slide-down {
+    animation: none;
+    transition: none;
+  }
+}

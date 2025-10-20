@@ -7,30 +7,30 @@ import { Pokemon } from '../models/interfaces/pokemon';
 @Injectable({
   providedIn: 'root'
 })
-export class PokeService {
+export class PokemonService {
   URL_BASE = environment.apiUrl;
   
   constructor(private http: HttpClient) { }
 
-  // 1. Obtener lista completa de Pokémon (para autocompletado)
-  getPokemons(): Observable<Pokemon[]> {
+  // Obtener lista completa de Pokémon (para autocompletado)
+  obtenerPokemons(): Observable<Pokemon[]> {
     const url = `${this.URL_BASE}/pokemon?limit=905&offset=0`;
     return this.http.get<Pokemon[]>(url);
   }
 
-  // 2. Obtener Pokémon de forma paginada (scroll infinito)
-  getPokemonsLazy(offset: number, limit: number): Observable<Pokemon[]> {
-    const url = `${this.URL_BASE}/pokemon?offset=${offset}&limit=${limit}`;
+  // Obtener Pokémon de forma paginada (scroll infinito)
+  obtenerPokemonsPaginados(desplazamiento: number, limite: number): Observable<Pokemon[]> {
+    const url = `${this.URL_BASE}/pokemon?offset=${desplazamiento}&limit=${limite}`;
     return this.http.get<Pokemon[]>(url);
   }
 
-  // 3. Obtener detalles completos de un Pokémon por URL
-  getPokeDetails(pokemonUrl: string): Observable<Pokemon> {
-    return this.http.get<Pokemon>(pokemonUrl);
+  // Obtener detalles completos de un Pokémon por URL
+  obtenerDetallesPoke(urlPokemon: string): Observable<Pokemon> {
+    return this.http.get<Pokemon>(urlPokemon);
   }
 
-  // 4. Obtener un Pokémon específico por nombre
-  getPokemon(pokemon: string): Observable<Pokemon> {
+  // Obtener un Pokémon específico por nombre
+  obtenerPokemon(pokemon: string): Observable<Pokemon> {
     const url = `${this.URL_BASE}/pokemon/${pokemon}`;
     return this.http.get<Pokemon>(url);
   }

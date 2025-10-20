@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
   selector: 'app-navbar',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './navbar.component.html'
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss'] // Asegúrate de tener esto
 })
 export class AppNavbarComponent {
   menuAbierto = signal(false);
