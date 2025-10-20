@@ -11,9 +11,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonListaComponent implements OnInit {
 
-    ngOnInit(): void {
-        // Aquí va tu lógica de inicialización
-        console.log('Componente Pokemon Lista inicializado');
-    }
+  ngOnInit(): void {
+    // Aquí va tu lógica de inicialización
+    console.log('Componente Pokemon Lista inicializado');
+  }
     
+    constructor(){
+
+    }
 }
