@@ -1,11 +1,12 @@
 <nav class="flex h-16 items-center justify-between px-6">
   <div>
     <button class="inline-flex items-center justify-center rounded-md p-2 text-white hoveAVAr:bg-red-600 transition-colors" aria-label="Menú">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-        <line x1="2" y1="12" x2="22" y2="12" stroke="currentColor" stroke-width="2"/>
-        <circle cx="12" cy="12" r="3" fill="currentColor"/>
-        <circle cx="12" cy="12" r="5" fill="none" stroke="currentColor" stroke-width="2"/>
+      <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 12a10 10 0 0 1 20 0" fill="#FF0000" stroke="#000000" stroke-width="2"/>        
+        <path d="M2 12a10 10 0 0 0 20 0" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+        <line x1="2" y1="12" x2="22" y2="12" stroke="#000000" stroke-width="2"/>
+        <circle cx="12" cy="12" r="4" fill="#FFFFFF" stroke="#000000" stroke-width="2"/>
+        <circle cx="12" cy="12" r="2" fill="#000000"/>
       </svg>
     </button>
   </div>
@@ -15,18 +16,16 @@
     </a>
   </div>  
   <div>
-    <button (click)="alternarTema()" class="inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-red-600 transition-colors" aria-label="Cambiar tema">
-      @if (temaOscuro()) {
-        <!-- Icono Luna (Tema Oscuro) -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      } @else {
-        <!-- Icono Sol (Tema Claro) -->
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-      }
+    <button (click)="alternarTema()" class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white text-red-600 hover:bg-red-50 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105" aria-label="Cambiar tema">
+      @if (temaOscuro()) { 
+        <svg class="w-5 h-5" fill="none" stroke="#EF4444" viewBox="0 0 24 24"> 
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/> 
+        </svg> 
+      } @else { 
+        <svg class="w-5 h-5" fill="none" stroke="#EF4444" viewBox="0 0 24 24"> 
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/> 
+        </svg> 
+      } 
     </button>
   </div>
 </nav>
