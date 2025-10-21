@@ -29,7 +29,7 @@ export class PokemonListaComponent implements OnInit {
     this.pokemonServicio.obtenerPokemons().subscribe((data: ListaPokemones) => {
       this.listaCompletaPokemon = data.results;
 
-      console.log("Manejo de listas completas " + this.listaCompletaPokemon);
+      // console.log("Manejo de listas completas " + this.listaCompletaPokemon);
     })
   }
 
