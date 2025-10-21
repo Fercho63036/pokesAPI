@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Pokemon } from '../models/interfaces/pokemon';
+import { ListaPokemones } from '../models/interfaces/pokemon-all';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +14,9 @@ export class PokemonService {
   constructor(private http: HttpClient) { }
 
   // Obtener lista completa de Pokémon (para autocompletado)
-  obtenerPokemons(): Observable<Pokemon[]> {
+  obtenerPokemons(): Observable<ListaPokemones> {
     const url = `${this.URL_BASE}/pokemon?limit=905&offset=0`;
-    return this.http.get<Pokemon[]>(url);
+    return this.http.get<ListaPokemones>(url);
   }
 
   // Obtener Pokémon de forma paginada (scroll infinito)
