@@ -26,7 +26,7 @@ export class PokemonService {
   }
 
   // Obtener detalles completos de un Pokémon por URL
-  obtenerDetallesPoke(urlPokemon: string): Observable<Pokemon> {
+  obtenerDetallesPokemon(urlPokemon: string): Observable<Pokemon> {
     return this.http.get<Pokemon>(urlPokemon);
   }
 

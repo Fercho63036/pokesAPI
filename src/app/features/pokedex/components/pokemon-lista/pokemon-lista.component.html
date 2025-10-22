@@ -1,1 +1,177 @@
-<h1>Pokemon Lista</h1>
+<div class="min-h-screen bg-gradient-to-br from-red-500 via-red-600 to-red-700 py-8 px-4">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-5xl md:text-6xl font-bold text-white mb-2 drop-shadow-lg">
+        Pokédex
+      </h1>
+      <p class="text-white text-lg opacity-90">
+        Descubre y explora todos los Pokémon
+      </p>
+    </div>
+
+    <!-- Barra de búsqueda -->
+    <div class="max-w-2xl mx-auto mb-8">
+      <div class="relative">
+        <input
+          type="text"
+          placeholder="Buscar Pokémon por nombre o número..."
+          (input)="buscarPokemon($event)"
+          class="w-full px-6 py-4 rounded-full text-lg shadow-xl border-4 border-white focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-all"
+        />
+        <svg class="absolute right-6 top-1/2 transform -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Contador de resultados -->
+    <div class="text-center text-white mb-6">
+      <p class="text-lg font-semibold">
+        Mostrando {{ pokemonFiltrados.length }} Pokémon
+      </p>
+    </div>
+
+    <!-- Grid de Pokémon -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div
+        *ngFor="let pokemon of pokemonFiltrados"
+        (click)="abrirDetalle(pokemon)"
+        class="bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden group"
+      >
+        <div class="relative p-6 text-center" [ngClass]="obtenerColorTipo(pokemon.types[0]?.type?.name || 'normal')">
+          <div class="absolute top-4 right-4 bg-white bg-opacity-90 rounded-full px-3 py-1">
+            <span class="text-sm font-bold text-gray-700">{{ formatearId(pokemon.id) }}</span>
+          </div>
+          <img
+            [src]="obtenerSprite(pokemon)"
+            [alt]="pokemon.name"
+            class="w-32 h-32 mx-auto transform group-hover:scale-110 transition-transform duration-300"
+          />
+        </div>
+        
+        <div class="p-4 bg-white">
+          <h3 class="text-xl font-bold text-gray-800 capitalize text-center mb-3">
+            {{ pokemon.name }}
+          </h3>
+          
+          <div class="flex gap-2 justify-center flex-wrap">
+            <span
+              *ngFor="let tipo of pokemon.types"
+              [ngClass]="obtenerColorTipo(tipo?.type?.name || 'normal')"
+              class="px-3 py-1 rounded-full text-white text-sm font-semibold capitalize"
+            >
+              {{ tipo?.type?.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div *ngIf="cargando" class="text-center py-12">
+      <div class="inline-block animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-white"></div>
+      <p class="text-white mt-4 text-lg font-semibold">Cargando más Pokémon...</p>
+    </div>
+
+    <!-- Mensaje sin resultados -->
+    <div *ngIf="pokemonFiltrados.length === 0 && !cargando" class="text-center py-12">
+      <p class="text-white text-2xl font-semibold">No se encontraron Pokémon</p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de detalles -->
+<div
+  *ngIf="pokemonSeleccionado"
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+  (click)="cerrarDetalle($event)"
+>
+  <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+    <div class="sticky top-0 z-10" [ngClass]="obtenerColorTipo(pokemonSeleccionado.types[0]?.type?.name || 'normal')">
+      <div class="flex justify-between items-center p-6">
+        <h2 class="text-3xl font-bold text-white capitalize">
+          {{ pokemonSeleccionado.name }}
+        </h2>
+        <button
+          (click)="cerrarDetalle()"
+          class="bg-white bg-opacity-30 hover:bg-opacity-50 rounded-full p-2 transition-all"
+        >
+          <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="text-center pb-6">
+        <img
+          [src]="obtenerSprite(pokemonSeleccionado)"
+          [alt]="pokemonSeleccionado.name"
+          class="w-48 h-48 mx-auto"
+        />
+      </div>
+    </div>
+
+    <div class="p-6">
+      <!-- ID y tipos -->
+      <div class="text-center mb-6">
+        <span class="text-2xl font-bold text-gray-700">{{ formatearId(pokemonSeleccionado.id) }}</span>
+        <div class="flex gap-2 justify-center mt-3 flex-wrap">
+          <span
+            *ngFor="let tipo of pokemonSeleccionado.types"
+            [ngClass]="obtenerColorTipo(tipo?.type?.name || 'normal')"
+            class="px-4 py-2 rounded-full text-white font-semibold capitalize"
+          >
+            {{ tipo?.type?.name }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Información física -->
+      <div class="grid grid-cols-2 gap-4 mb-6">
+        <div class="bg-gray-100 rounded-xl p-4 text-center">
+          <p class="text-gray-600 text-sm mb-1">Altura</p>
+          <p class="text-2xl font-bold text-gray-800">{{ pokemonSeleccionado.height / 10 }} m</p>
+        </div>
+        <div class="bg-gray-100 rounded-xl p-4 text-center">
+          <p class="text-gray-600 text-sm mb-1">Peso</p>
+          <p class="text-2xl font-bold text-gray-800">{{ pokemonSeleccionado.weight / 10 }} kg</p>
+        </div>
+      </div>
+
+      <!-- Habilidades -->
+      <div class="mb-6">
+        <h3 class="text-xl font-bold text-gray-800 mb-3">Habilidades</h3>
+        <div class="flex flex-wrap gap-2">
+          <span
+            *ngFor="let habilidad of pokemonSeleccionado.abilities"
+            class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg capitalize font-medium"
+          >
+            {{ habilidad?.ability?.name?.replace('-', ' ') }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Estadísticas -->
+      <div>
+        <h3 class="text-xl font-bold text-gray-800 mb-3">Estadísticas Base</h3>
+        <div class="space-y-3">
+          <div *ngFor="let stat of pokemonSeleccionado.stats">
+            <div class="flex justify-between mb-1">
+              <span class="text-gray-700 capitalize font-medium">
+                {{ stat?.stat?.name?.replace('-', ' ') }}
+              </span>
+              <span class="text-gray-900 font-bold">{{ stat?.base_stat }}</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-3">
+              <div
+                class="h-3 rounded-full transition-all duration-500"
+                [ngClass]="obtenerColorTipo(pokemonSeleccionado.types[0]?.type?.name || 'normal')"
+                [style.width.%]="(stat?.base_stat || 0 / 255) * 100"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
