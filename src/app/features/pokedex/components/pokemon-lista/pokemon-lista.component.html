@@ -38,7 +38,7 @@
         *ngFor="let pokemon of pokemonPaginados"
         (click)="abrirDetalle(pokemon)"
         class="relative rounded-3xl shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300 cursor-pointer overflow-hidden"
-        [ngClass]="obtenerColorTipo(pokemon?.types?.[0]?.type?.name! || 'normal')"
+        [ngClass]="obtenerColorTipo(obtenerPrimerTipo(pokemon))"
       >
         <!-- Contenido de la tarjeta -->
         <div class="p-6 relative min-h-[320px]">
@@ -168,7 +168,7 @@
   (click)="cerrarDetalle($event)"
 >
   <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
-    <div class="sticky top-0 z-10 rounded-t-3xl" [ngClass]="obtenerColorTipo(pokemonSeleccionado!.types?.[0]?.type?.name || 'normal')">
+    <div class="sticky top-0 z-10 rounded-t-3xl" [ngClass]="obtenerColorTipo(obtenerPrimerTipo(pokemonSeleccionado))">
       <div class="flex justify-between items-center p-6">
         <div>
           <p class="text-white text-opacity-80 font-semibold text-xl mb-1">
@@ -249,8 +249,8 @@
             <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
               <div
                 class="h-4 rounded-full transition-all duration-500"
-                [ngClass]="obtenerColorTipo(pokemonSeleccionado?.types?.[0]?.type?.name || 'normal')"
-                [style.width.%]="(stat.base_stat || 0) / 255 * 100"
+                [ngClass]="obtenerColorTipo(obtenerPrimerTipo(pokemonSeleccionado))"
+                [style.width.%]="obtenerEstadisticaPorcentaje(stat.base_stat || 0)"
               ></div>
             </div>
           </div>

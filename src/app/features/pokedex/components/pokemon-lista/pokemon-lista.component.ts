@@ -204,4 +204,15 @@ export class PokemonListaComponent implements OnInit {
   tienetipos(pokemon: Pokemon): boolean {
     return pokemon.types && pokemon.types.length > 0;
   }
+
+  obtenerPrimerTipo(pokemon: Pokemon | null): string {
+    if (!pokemon || !pokemon.types || pokemon.types.length === 0) {
+      return 'normal';
+    }
+    return pokemon.types[0]?.type?.name || 'normal';
+  }
+
+obtenerEstadisticaPorcentaje(baseStat: number): number {
+  return (baseStat / 255) * 100;
+}
 }
