@@ -1,1 +1,70 @@
-<h2>Tarjeta Pokemon</h2>
+    <div (click)="onCardClick()" 
+      class="group relative rounded-3xl shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-300 cursor-pointer overflow-hidden bg-white"
+      [ngClass]="obtenerColorTipo(obtenerPrimerTipo())">
+      
+      <!-- Patrón decorativo de fondo -->
+      <div class="absolute inset-0 opacity-20">
+        <svg class="w-full h-full" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern [id]="'pattern-' + pokemon.id" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+              <circle cx="20" cy="20" r="2" fill="white" opacity="0.3"/>
+            </pattern>
+          </defs>
+          <rect width="400" height="400" [attr.fill]="'url(#pattern-' + pokemon.id + ')'" />
+        </svg>
+      </div>
+
+      <!-- Contenido superior con degradado -->
+      <div class="relative p-6 pb-0">
+        <!-- Número y nombre -->
+        <div class="mb-3">
+          <p class="text-white text-opacity-90 font-bold text-sm mb-1 tracking-wider">
+            {{ formatearId(pokemon.id) }}
+          </p>
+          <h3 class="text-2xl font-bold text-white capitalize drop-shadow-lg">
+            {{ pokemon.name }}
+          </h3>
+        </div>
+
+        <!-- Tipos -->
+        <div class="flex gap-2 flex-wrap mb-3">
+          @if (tienetipos()) {
+            @for (tipo of pokemon.types; track tipo.type.name) {
+              <span class="px-3 py-1.5 rounded-full text-xs font-bold capitalize transform hover:scale-110 transition-transform duration-200"
+                [ngClass]="obtenerColorBadgeTipo(tipo.type.name)">
+                {{ tipo.type.name }}
+              </span>
+            }
+          } @else {
+            <span class="px-3 py-1.5 rounded-full text-xs font-bold capitalize transform hover:scale-110 transition-transform duration-200"
+              [ngClass]="obtenerColorBadgeTipo('normal')">
+              Normal
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Imagen del Pokémon con efecto de brillo -->
+      <div class="relative px-6 pb-6 pt-2">
+        <div class="relative">
+          <!-- Círculo de resplandor -->
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-32 h-32 bg-white rounded-full opacity-20 blur-2xl group-hover:opacity-30 transition-opacity duration-300"></div>
+          </div>
+          <!-- Imagen -->
+          <img [src]="obtenerSprite()" [alt]="pokemon.name" 
+            class="relative w-40 h-40 mx-auto object-contain drop-shadow-2xl transform group-hover:scale-110 transition-transform duration-300 filter brightness-110"
+          />
+        </div>
+      </div>
+
+      <!-- Decoración esquina -->
+      <div class="absolute top-4 right-4 w-16 h-16 opacity-10 pointer-events-none">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="40" fill="white"/>
+        </svg>
+      </div>
+
+      <!-- Efecto de hover overlay -->
+      <div class="absolute inset-0 bg-gradient-to-t from-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+    </div>
