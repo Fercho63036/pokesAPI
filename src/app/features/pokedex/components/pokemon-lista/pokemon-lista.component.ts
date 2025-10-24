@@ -2,7 +2,6 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Component, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { PokemonService } from '../../../../core/services/pokemon.service';
 import { Pokemon } from '../../../../core/models/interfaces/pokemon';
-import { ListaPokemones } from '../../../../core/models/interfaces/pokemon-all';
 
 @Component({
   selector: 'app-pokemon-lista',
@@ -12,6 +11,7 @@ import { ListaPokemones } from '../../../../core/models/interfaces/pokemon-all';
 })
 export class PokemonListaComponent implements OnInit {
   private platformId = inject(PLATFORM_ID);
+  private pokemonServicio = inject(PokemonService);
   
   listaPokemon: Pokemon[] = [];
   pokemonFiltrados: Pokemon[] = [];
@@ -24,7 +24,7 @@ export class PokemonListaComponent implements OnInit {
   pokemonPorPagina = 20;
   totalPaginas = 0;
   pokemonPaginados: Pokemon[] = [];
-  totalPokemonDisponibles = 905; // Total de Pokémon en la API
+  totalPokemonDisponibles = 905;
 
   // Mapeo de colores por tipo
   coloresTipo: { [key: string]: string } = {
@@ -48,15 +48,12 @@ export class PokemonListaComponent implements OnInit {
     fairy: 'bg-pink-300'
   };
 
-  constructor(private pokemonServicio: PokemonService) {}
-
   ngOnInit(): void {
     this.cargarPokemonInicial();
   }
 
   cargarPokemonInicial(): void {
     this.cargando = true;
-    // Cargar los primeros 151 Pokémon (primera generación)
     const cantidadInicial = 151;
     
     this.pokemonServicio.obtenerPokemonsPaginados(0, cantidadInicial)
@@ -73,7 +70,6 @@ export class PokemonListaComponent implements OnInit {
             this.actualizarPaginaActual();
             this.cargando = false;
             
-            // Debug: Verificar el primer Pokémon
             if (this.listaPokemon.length > 0) {
               console.log('Pokémon cargados:', this.listaPokemon.length);
               console.log('Primer Pokémon:', this.listaPokemon[0]);
@@ -103,14 +99,12 @@ export class PokemonListaComponent implements OnInit {
           Promise.all(promesas).then((detalles: any[]) => {
             const nuevosPokemon = detalles.filter(p => p !== null && p !== undefined);
             
-            // Agregar solo los Pokémon que no existan ya
             nuevosPokemon.forEach(pokemon => {
               if (!this.listaPokemon.find(p => p.id === pokemon.id)) {
                 this.listaPokemon.push(pokemon);
               }
             });
             
-            // Ordenar por ID
             this.listaPokemon.sort((a, b) => a.id - b.id);
             
             if (this.busqueda === '') {
@@ -141,7 +135,6 @@ export class PokemonListaComponent implements OnInit {
     const fin = inicio + this.pokemonPorPagina;
     this.pokemonPaginados = this.pokemonFiltrados.slice(inicio, fin);
     
-    // Scroll hacia arriba suavemente - SOLO en el navegador
     if (isPlatformBrowser(this.platformId)) {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -151,15 +144,13 @@ export class PokemonListaComponent implements OnInit {
     if (pagina >= 1 && pagina <= this.totalPaginas) {
       this.paginaActual = pagina;
       
-      // Si no estamos en modo búsqueda, verificar si necesitamos cargar más Pokémon
       if (this.busqueda === '') {
         const pokemonNecesarios = pagina * this.pokemonPorPagina;
         const pokemonFaltantes = pokemonNecesarios - this.listaPokemon.length;
         
-        // Si faltan Pokémon por cargar
         if (pokemonFaltantes > 0 && this.listaPokemon.length < this.totalPokemonDisponibles) {
           const desdeId = this.listaPokemon.length;
-          const cantidad = Math.min(pokemonFaltantes + this.pokemonPorPagina, 100); // Cargar de a 100 máximo
+          const cantidad = Math.min(pokemonFaltantes + this.pokemonPorPagina, 100);
           this.cargarMasPokemon(desdeId, cantidad);
         } else {
           this.actualizarPaginaActual();
