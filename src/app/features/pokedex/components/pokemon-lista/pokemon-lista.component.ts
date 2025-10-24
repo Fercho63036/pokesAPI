@@ -27,7 +27,7 @@ export class PokemonListaComponent implements OnInit {
   pokemonPorPagina = 20;
   totalPaginas = 0;
   pokemonPaginados: Pokemon[] = [];
-  totalPokemonDisponibles = 905;
+  totalPokemonDisponibles = 1025;
 
   // Mapeo de colores por tipo con gradientes vibrantes
   coloresTipo: { [key: string]: string } = {
@@ -79,7 +79,7 @@ export class PokemonListaComponent implements OnInit {
 
   cargarPokemonInicial(): void {
     this.cargando = true;
-    const cantidadInicial = 151;
+    const cantidadInicial = 1025; // Aumentado a 200 para cargar más desde el inicio
     
     this.pokemonServicio.obtenerPokemonsPaginados(0, cantidadInicial)
       .subscribe({
@@ -107,48 +107,59 @@ export class PokemonListaComponent implements OnInit {
       });
   }
 
-  cargarMasPokemon(desdeId: number, cantidad: number): void {
-    this.cargando = true;
-    
-    this.pokemonServicio.obtenerPokemonsPaginados(desdeId, cantidad)
-      .subscribe({
-        next: (data: any) => {
-          const promesas = data.results.map((item: any) => 
-            this.pokemonServicio.obtenerDetallesPokemon(item.url).toPromise()
-          );
+  cargarMasPokemon(desdeId: number, cantidad: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.cargando = true;
+      
+      this.pokemonServicio.obtenerPokemonsPaginados(desdeId, cantidad)
+        .subscribe({
+          next: (data: any) => {
+            const promesas = data.results.map((item: any) => 
+              this.pokemonServicio.obtenerDetallesPokemon(item.url).toPromise()
+            );
 
-          Promise.all(promesas).then((detalles: any[]) => {
-            const nuevosPokemon = detalles.filter(p => p !== null && p !== undefined);
-            
-            nuevosPokemon.forEach(pokemon => {
-              if (!this.listaPokemon.find(p => p.id === pokemon.id)) {
-                this.listaPokemon.push(pokemon);
+            Promise.all(promesas).then((detalles: any[]) => {
+              const nuevosPokemon = detalles.filter(p => p !== null && p !== undefined);
+              
+              nuevosPokemon.forEach(pokemon => {
+                if (!this.listaPokemon.find(p => p.id === pokemon.id)) {
+                  this.listaPokemon.push(pokemon);
+                }
+              });
+              
+              this.listaPokemon.sort((a, b) => a.id - b.id);
+              
+              if (this.busqueda === '') {
+                this.pokemonFiltrados = [...this.listaPokemon];
               }
+              
+              this.calcularPaginacion();
+              this.actualizarPaginaActual();
+              this.cargando = false;
+              resolve();
+            }).catch((error) => {
+              console.error('Error al cargar más Pokémon:', error);
+              this.cargando = false;
+              reject(error);
             });
-            
-            this.listaPokemon.sort((a, b) => a.id - b.id);
-            
-            if (this.busqueda === '') {
-              this.pokemonFiltrados = [...this.listaPokemon];
-            }
-            
-            this.calcularPaginacion();
-            this.actualizarPaginaActual();
+          },
+          error: (error) => {
+            console.error('Error en la petición:', error);
             this.cargando = false;
-          }).catch((error) => {
-            console.error('Error al cargar más Pokémon:', error);
-            this.cargando = false;
-          });
-        },
-        error: (error) => {
-          console.error('Error en la petición:', error);
-          this.cargando = false;
-        }
-      });
+            reject(error);
+          }
+        });
+    });
   }
 
   calcularPaginacion(): void {
-    this.totalPaginas = Math.ceil(this.pokemonFiltrados.length / this.pokemonPorPagina);
+    // Si no hay búsqueda, usar el total disponible en la API
+    if (this.busqueda === '') {
+      this.totalPaginas = Math.ceil(this.totalPokemonDisponibles / this.pokemonPorPagina);
+    } else {
+      // Si hay búsqueda, usar solo los filtrados
+      this.totalPaginas = Math.ceil(this.pokemonFiltrados.length / this.pokemonPorPagina);
+    }
   }
 
   actualizarPaginaActual(): void {
@@ -161,24 +172,43 @@ export class PokemonListaComponent implements OnInit {
     }
   }
 
-  cambiarPagina(pagina: number): void {
-    if (pagina >= 1 && pagina <= this.totalPaginas) {
-      this.paginaActual = pagina;
+  async cambiarPagina(pagina: number): Promise<void> {
+    if (pagina < 1 || pagina > this.totalPaginas) {
+      return;
+    }
+
+    this.paginaActual = pagina;
+    
+    // Si hay búsqueda activa, solo actualizar la vista
+    if (this.busqueda !== '') {
+      this.actualizarPaginaActual();
+      return;
+    }
+
+    // Calcular el índice del último Pokémon que necesitamos para esta página
+    const ultimoIndiceNecesario = pagina * this.pokemonPorPagina;
+    
+    // Si no tenemos suficientes Pokémon cargados
+    if (this.listaPokemon.length < ultimoIndiceNecesario && 
+        this.listaPokemon.length < this.totalPokemonDisponibles) {
       
-      if (this.busqueda === '') {
-        const pokemonNecesarios = pagina * this.pokemonPorPagina;
-        const pokemonFaltantes = pokemonNecesarios - this.listaPokemon.length;
-        
-        if (pokemonFaltantes > 0 && this.listaPokemon.length < this.totalPokemonDisponibles) {
-          const desdeId = this.listaPokemon.length;
-          const cantidad = Math.min(pokemonFaltantes + this.pokemonPorPagina, 100);
-          this.cargarMasPokemon(desdeId, cantidad);
-        } else {
-          this.actualizarPaginaActual();
-        }
-      } else {
-        this.actualizarPaginaActual();
+      const pokemonFaltantes = ultimoIndiceNecesario - this.listaPokemon.length;
+      const offset = this.listaPokemon.length; // El offset es la cantidad actual de Pokémon
+      
+      // Cargar al menos lo que falta + un buffer adicional
+      const cantidadACargar = Math.min(
+        Math.max(pokemonFaltantes, 100), // Cargar mínimo 100 para tener buffer
+        this.totalPokemonDisponibles - this.listaPokemon.length
+      );
+      
+      try {
+        await this.cargarMasPokemon(offset, cantidadACargar);
+      } catch (error) {
+        console.error('Error al cargar Pokémon para la página:', error);
+        this.actualizarPaginaActual(); // Mostrar lo que tenemos aunque haya error
       }
+    } else {
+      this.actualizarPaginaActual();
     }
   }
 
@@ -216,8 +246,26 @@ export class PokemonListaComponent implements OnInit {
   }
 
   obtenerRangoActual(): string {
+    if (this.pokemonFiltrados.length === 0) {
+      return '0-0';
+    }
+    
     const inicio = (this.paginaActual - 1) * this.pokemonPorPagina + 1;
-    const fin = Math.min(this.paginaActual * this.pokemonPorPagina, this.pokemonFiltrados.length);
+    
+    // Si estamos en modo sin búsqueda, el fin se calcula con el total disponible
+    let fin: number;
+    if (this.busqueda === '') {
+      fin = Math.min(
+        this.paginaActual * this.pokemonPorPagina, 
+        this.totalPokemonDisponibles
+      );
+    } else {
+      fin = Math.min(
+        this.paginaActual * this.pokemonPorPagina, 
+        this.pokemonFiltrados.length
+      );
+    }
+    
     return `${inicio}-${fin}`;
   }
 
