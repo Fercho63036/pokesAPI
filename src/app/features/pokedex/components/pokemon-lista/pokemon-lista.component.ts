@@ -29,7 +29,6 @@ export class PokemonListaComponent implements OnInit {
   pokemonPaginados: Pokemon[] = [];
   totalPokemonDisponibles = 1025;
 
-  // Mapeo de colores por tipo con gradientes vibrantes
   coloresTipo: { [key: string]: string } = {
     normal: 'bg-gradient-to-br from-gray-400 via-gray-500 to-gray-600',
     fire: 'bg-gradient-to-br from-orange-400 via-red-500 to-red-600',
@@ -51,7 +50,6 @@ export class PokemonListaComponent implements OnInit {
     fairy: 'bg-gradient-to-br from-pink-300 via-pink-400 to-rose-400'
   };
 
-  // Colores para badges de tipos (más saturados y con mejor contraste)
   coloresBadgeTipo: { [key: string]: string } = {
     normal: 'bg-gray-500 text-white shadow-lg shadow-gray-500/50',
     fire: 'bg-red-500 text-white shadow-lg shadow-red-500/50',
@@ -79,7 +77,7 @@ export class PokemonListaComponent implements OnInit {
 
   cargarPokemonInicial(): void {
     this.cargando = true;
-    const cantidadInicial = 1025; // Aumentado a 200 para cargar más desde el inicio
+    const cantidadInicial = 1025;
     
     this.pokemonServicio.obtenerPokemonsPaginados(0, cantidadInicial)
       .subscribe({
@@ -87,7 +85,6 @@ export class PokemonListaComponent implements OnInit {
           const promesas = data.results.map((item: any) => 
             this.pokemonServicio.obtenerDetallesPokemon(item.url).toPromise()
           );
-
           Promise.all(promesas).then((detalles: any[]) => {
             this.listaPokemon = detalles.filter(p => p !== null && p !== undefined);
             this.pokemonFiltrados = [...this.listaPokemon];
@@ -153,11 +150,9 @@ export class PokemonListaComponent implements OnInit {
   }
 
   calcularPaginacion(): void {
-    // Si no hay búsqueda, usar el total disponible en la API
     if (this.busqueda === '') {
       this.totalPaginas = Math.ceil(this.totalPokemonDisponibles / this.pokemonPorPagina);
     } else {
-      // Si hay búsqueda, usar solo los filtrados
       this.totalPaginas = Math.ceil(this.pokemonFiltrados.length / this.pokemonPorPagina);
     }
   }
@@ -179,25 +174,21 @@ export class PokemonListaComponent implements OnInit {
 
     this.paginaActual = pagina;
     
-    // Si hay búsqueda activa, solo actualizar la vista
     if (this.busqueda !== '') {
       this.actualizarPaginaActual();
       return;
     }
 
-    // Calcular el índice del último Pokémon que necesitamos para esta página
     const ultimoIndiceNecesario = pagina * this.pokemonPorPagina;
     
-    // Si no tenemos suficientes Pokémon cargados
     if (this.listaPokemon.length < ultimoIndiceNecesario && 
         this.listaPokemon.length < this.totalPokemonDisponibles) {
       
       const pokemonFaltantes = ultimoIndiceNecesario - this.listaPokemon.length;
-      const offset = this.listaPokemon.length; // El offset es la cantidad actual de Pokémon
+      const offset = this.listaPokemon.length;
       
-      // Cargar al menos lo que falta + un buffer adicional
       const cantidadACargar = Math.min(
-        Math.max(pokemonFaltantes, 100), // Cargar mínimo 100 para tener buffer
+        Math.max(pokemonFaltantes, 100), 
         this.totalPokemonDisponibles - this.listaPokemon.length
       );
       
@@ -205,7 +196,7 @@ export class PokemonListaComponent implements OnInit {
         await this.cargarMasPokemon(offset, cantidadACargar);
       } catch (error) {
         console.error('Error al cargar Pokémon para la página:', error);
-        this.actualizarPaginaActual(); // Mostrar lo que tenemos aunque haya error
+        this.actualizarPaginaActual();
       }
     } else {
       this.actualizarPaginaActual();
@@ -252,7 +243,6 @@ export class PokemonListaComponent implements OnInit {
     
     const inicio = (this.paginaActual - 1) * this.pokemonPorPagina + 1;
     
-    // Si estamos en modo sin búsqueda, el fin se calcula con el total disponible
     let fin: number;
     if (this.busqueda === '') {
       fin = Math.min(
