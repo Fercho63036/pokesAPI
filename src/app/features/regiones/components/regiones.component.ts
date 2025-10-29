@@ -2,35 +2,44 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { UbicacionService } from '../../../core/services/ubicacion.service';
 
+interface Region {
+    name: string;
+    url: string;
+    image: string;
+}
+
 @Component({
     selector: 'app-regiones',
     standalone: true,
-    imports: [
-        CommonModule,
-    ],
+    imports: [CommonModule],
     templateUrl: './regiones.component.html',
 })
 export class RegionesComponent implements OnInit {
 
-    private ubicacionServicio = inject(UbicacionService);
-  
+    regiones: Region[] = [];
+
+    private ubicacionService = inject(UbicacionService);
+
     ngOnInit(): void {
         this.obtenerlistaRegiones();
-        this.obtenerInformacionRegion();
     }
 
     obtenerlistaRegiones(){
-        this.ubicacionServicio.obtenerListaRegiones()
+        this.ubicacionService.obtenerListaRegiones()
         .subscribe( respuesta => {
-            console.log(respuesta);
+            this.regiones = respuesta.results.map((region: any) => ({
+                ...region,
+                image: `assets/images/locations/${region.name}.png`
+            }));
+            
+            console.log('Regiones cargadas:', this.regiones);
         });
     }
 
-    obtenerInformacionRegion(){
-        this.ubicacionServicio.obtenerRegion('Kanto')
-        .subscribe( region => {
-            console.log(region);
-        })
+    onImageError(event: any, regionName: string) {
+        console.error(`Error cargando imagen: ${regionName}`);
+        // Imagen por defecto si falla
+        event.target.src = 'assets/images/pokeApi.png';
     }
 
 }

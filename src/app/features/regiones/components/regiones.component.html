@@ -1,1 +1,53 @@
-<h1>Seccion de regiones</h1>
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">
+                Regiones Pokémon
+            </h1>
+            <p class="text-gray-600 text-lg">
+                Explora todas las regiones del mundo Pokémon
+            </p>
+        </div>
+
+        <!-- Grid de Regiones -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            @for (region of regiones; track region.name) {
+                <div class="group cursor-pointer">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                        <!-- Imagen -->
+                        <div class="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
+                            <img 
+                                [src]="region.image" 
+                                [alt]="region.name"
+                                (error)="onImageError($event, region.name)"
+                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                            >
+                            <!-- Overlay en hover -->
+                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                        </div>
+                        
+                        <!-- Contenido -->
+                        <div class="p-6">
+                            <h3 class="text-2xl font-bold text-gray-800 capitalize mb-2">
+                                {{ region.name }}
+                            </h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-gray-500">
+                                    Región #{{ region.url.split('/')[6] }}
+                                </span>
+                                <svg class="w-6 h-6 text-blue-500 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            } @empty {
+                <div class="col-span-full text-center py-12">
+                    <p class="text-gray-500 text-xl">No hay regiones disponibles</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
