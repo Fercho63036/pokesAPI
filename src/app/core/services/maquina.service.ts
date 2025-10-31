@@ -8,9 +8,10 @@ import { Maquina, RespuestaListaMaquinas } from '../models/interfaces/maquina';
   providedIn: 'root'
 })
 export class MaquinaService {
-  private urlBase = 'https://pokeapi.co/api/v2/machine';
 
-  constructor(private http: HttpClient) {}
+    private urlBase = 'https://pokeapi.co/api/v2/machine';
+
+    constructor(private http: HttpClient) {}
 
     /**
      * Obtiene una máquina específica por ID
