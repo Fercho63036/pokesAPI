@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { UbicacionService } from '../../../core/services/ubicacion.service';
 
 interface Region {
@@ -19,6 +19,7 @@ export class RegionesComponent implements OnInit {
     regiones: Region[] = [];
 
     private ubicacionService = inject(UbicacionService);
+    private cdr = inject(ChangeDetectorRef);
 
     ngOnInit(): void {
         this.obtenerlistaRegiones();
@@ -28,20 +29,39 @@ export class RegionesComponent implements OnInit {
         this.ubicacionService.obtenerListaRegiones()
             .subscribe({
                 next: (respuesta) => {
-                    this.regiones = respuesta.results.map((region: any) => ({
-                        ...region,
-                        image: `assets/images/locations/${region.name}.png`
-                    }));                    
+                    this.regiones = respuesta.results.map((region: any) => {
+                        // Normalizar el nombre para la ruta de la imagen
+                        const nombreImagen = region.name
+                            .toLowerCase()
+                            .trim()
+                            .replace(/\s+/g, '-');
+
+                        return {
+                            ...region,
+                            image: `assets/images/locations/${nombreImagen}.png`
+                        };
+                    });
+                    
+                    // Forzar la detección de cambios
+                    this.cdr.detectChanges();
+                    
+                    console.log('Regiones cargadas:', this.regiones.length);
                 },
                 error: (error) => {
                     console.error('Error al cargar regiones:', error);
+                    this.cdr.detectChanges();
                 }
             });
     }
 
     onImageError(event: any, regionName: string): void {
-        console.error(`Error cargando imagen: ${regionName}`);
+        // Evitar loops infinitos si la imagen de fallback también falla
+        if (event.target.src.includes('pokeApi.png')) {
+            console.error('Imagen de fallback también falló');
+            return;
+        }
+        
+        console.warn(`Error cargando imagen: ${regionName}`);
         event.target.src = 'assets/images/pokeApi.png';
     }
-
 }

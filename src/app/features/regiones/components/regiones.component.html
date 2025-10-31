@@ -1,15 +1,5 @@
-<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+<div class="min-h-screen bg-gradient-to-br py-12 px-4">
     <div class="max-w-7xl mx-auto">
-        <!-- Header -->
-        <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold text-gray-800 mb-4">
-                Regiones Pokémon
-            </h1>
-            <p class="text-gray-600 text-lg">
-                Explora todas las regiones del mundo Pokémon
-            </p>
-        </div>
-
         <!-- Grid de Regiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @for (region of regiones; track region.name) {
@@ -17,14 +7,8 @@
                     <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <!-- Imagen -->
                         <div class="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
-                            <img 
-                                [src]="region.image" 
-                                [alt]="region.name"
-                                (error)="onImageError($event, region.name)"
-                                class="w-full h-full object-cover"
-                            >
+                            <img [src]="region.image" [alt]="region.name" (error)="onImageError($event, region.name)" class="w-full h-full object-cover">
                         </div>
-                        
                         <!-- Contenido -->
                         <div class="p-6">
                             <h3 class="text-2xl font-bold text-gray-800 capitalize mb-2">
