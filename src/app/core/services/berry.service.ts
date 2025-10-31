@@ -3,12 +3,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Berry, FirmezaBerry, RespuestaAPIBerry, RespuestaAPIFirmezaBerry, RespuestaAPISaborBerry, SaborBerry } from '../models/interfaces/berry';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BerryService {
-    private readonly urlBase = 'https://pokeapi.co/api/v2';
+    URL_BASE = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
@@ -19,7 +20,7 @@ export class BerryService {
      */
     obtenerBerry(idONombre: string | number): Observable<Berry> {
         return new Observable(observador => {
-        this.http.get<RespuestaAPIBerry>(`${this.urlBase}/berry/${idONombre}`)
+        this.http.get<RespuestaAPIBerry>(`${this.URL_BASE}/berry/${idONombre}`)
             .subscribe({
             next: (respuesta) => {
                 const berryTraducida: Berry = {
@@ -54,7 +55,7 @@ export class BerryService {
      */
     obtenerFirmezaBerry(idONombre: string | number): Observable<FirmezaBerry> {
         return new Observable(observador => {
-        this.http.get<RespuestaAPIFirmezaBerry>(`${this.urlBase}/berry-firmness/${idONombre}`)
+        this.http.get<RespuestaAPIFirmezaBerry>(`${this.URL_BASE}/berry-firmness/${idONombre}`)
             .subscribe({
             next: (respuesta) => {
                 const firmezaTraducida: FirmezaBerry = {
@@ -81,7 +82,7 @@ export class BerryService {
      */
     obtenerSaborBerry(idONombre: string | number): Observable<SaborBerry> {
         return new Observable(observador => {
-        this.http.get<RespuestaAPISaborBerry>(`${this.urlBase}/berry-flavor/${idONombre}`)
+        this.http.get<RespuestaAPISaborBerry>(`${this.URL_BASE}/berry-flavor/${idONombre}`)
             .subscribe({
             next: (respuesta) => {
                 const saborTraducido: SaborBerry = {
@@ -112,7 +113,7 @@ export class BerryService {
      * @returns Observable con la lista de berries
      */
     obtenerListaBerries(limite: number = 100, desplazamiento: number = 0): Observable<any> {
-        return this.http.get(`${this.urlBase}/berry?limit=${limite}&offset=${desplazamiento}`);
+        return this.http.get(`${this.URL_BASE}/berry?limit=${limite}&offset=${desplazamiento}`);
     }
 
     /**
@@ -120,7 +121,7 @@ export class BerryService {
      * @returns Observable con la lista de firmezas
      */
     obtenerListaFirmezas(): Observable<any> {
-        return this.http.get(`${this.urlBase}/berry-firmness`);
+        return this.http.get(`${this.URL_BASE}/berry-firmness`);
     }
 
     /**
@@ -128,6 +129,6 @@ export class BerryService {
      * @returns Observable con la lista de sabores
      */
     obtenerListaSabores(): Observable<any> {
-        return this.http.get(`${this.urlBase}/berry-flavor`);
+        return this.http.get(`${this.URL_BASE}/berry-flavor`);
     }
 }

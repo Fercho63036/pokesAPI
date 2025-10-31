@@ -7,19 +7,20 @@ import { AreaPalPark } from '../models/interfaces/area-pal-park';
 import { Region } from '../models/interfaces/region';
 import { Nombre } from '../models/interfaces/nombre';
 import { EncuentroPokemon } from '../models/interfaces/encuentro-pokemon';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UbicacionService {
-    private urlBase = 'https://pokeapi.co/api/v2';
+    URL_BASE = environment.apiUrl;
 
     constructor(private http: HttpClient) { }
 
     // ========== ÁREAS DE UBICACIÓN ========== //
 
     obtenerAreaUbicacion(idONombre: string | number): Observable<AreaUbicacion> {
-        return this.http.get<AreaUbicacion>(`${this.urlBase}/location-area/${idONombre}/`);
+        return this.http.get<AreaUbicacion>(`${this.URL_BASE}/location-area/${idONombre}/`);
     }
 
     obtenerListaAreasUbicacion(limite: number = 20, offset: number = 0): Observable<{
@@ -28,13 +29,13 @@ export class UbicacionService {
         previous: string | null;
         results: RecursoAPIConNombre[];
     }> {
-        return this.http.get<any>(`${this.urlBase}/location-area?limit=${limite}&offset=${offset}`);
+        return this.http.get<any>(`${this.URL_BASE}/location-area?limit=${limite}&offset=${offset}`);
     }
 
     // ========== ÁREAS DE PAL PARK ========== //
         
     obtenerAreaPalPark(idONombre: string | number): Observable<AreaPalPark> {
-        return this.http.get<AreaPalPark>(`${this.urlBase}/pal-park-area/${idONombre}/`);
+        return this.http.get<AreaPalPark>(`${this.URL_BASE}/pal-park-area/${idONombre}/`);
     }
 
     obtenerListaAreasPalPark(): Observable<{
@@ -43,13 +44,13 @@ export class UbicacionService {
         previous: string | null;
         results: RecursoAPIConNombre[];
     }> {
-        return this.http.get<any>(`${this.urlBase}/pal-park-area`);
+        return this.http.get<any>(`${this.URL_BASE}/pal-park-area`);
     }
 
     // ========== REGIONES ========== //
 
     obtenerRegion(idONombre: string | number): Observable<Region> {
-        return this.http.get<Region>(`${this.urlBase}/region/${idONombre}/`);
+        return this.http.get<Region>(`${this.URL_BASE}/region/${idONombre}/`);
     }
 
     obtenerListaRegiones(): Observable<{
@@ -58,7 +59,7 @@ export class UbicacionService {
         previous: string | null;
         results: RecursoAPIConNombre[];
     }> {
-        return this.http.get<any>(`${this.urlBase}/region`);
+        return this.http.get<any>(`${this.URL_BASE}/region`);
     }
 
     // ========== MÉTODOS AUXILIARES ========== //

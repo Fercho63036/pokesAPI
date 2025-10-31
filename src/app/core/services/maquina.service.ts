@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Maquina, RespuestaListaMaquinas } from '../models/interfaces/maquina';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class MaquinaService {
-
-    private urlBase = 'https://pokeapi.co/api/v2/machine';
+    
+    URL_BASE = environment.apiUrl;
 
     constructor(private http: HttpClient) {}
 
@@ -19,7 +20,7 @@ export class MaquinaService {
      * @returns Observable con los datos de la máquina
      */
     obtenerMaquina(id: number): Observable<Maquina> {
-        return this.http.get<Maquina>(`${this.urlBase}/${id}`);
+        return this.http.get<Maquina>(`${this.URL_BASE}/machine/${id}`);
     }
 
     /**
@@ -29,7 +30,7 @@ export class MaquinaService {
      * @returns Observable con la lista de máquinas
      */
     obtenerMaquinas(limite?: number, desplazamiento?: number): Observable<RespuestaListaMaquinas> {
-        let url = this.urlBase;
+        let url = this.URL_BASE;
         const parametros: string[] = [];
         
         if (limite !== undefined) {
@@ -52,6 +53,6 @@ export class MaquinaService {
      * @returns Observable con los datos de la máquina
      */
     obtenerMaquinaPorNombreItem(nombreItem: string): Observable<Maquina> {
-        return this.http.get<Maquina>(`${this.urlBase}/${nombreItem}`);
+        return this.http.get<Maquina>(`${this.URL_BASE}/machine/${nombreItem}`);
     }
 }
