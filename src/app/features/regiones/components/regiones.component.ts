@@ -30,22 +30,16 @@ export class RegionesComponent implements OnInit {
             .subscribe({
                 next: (respuesta) => {
                     this.regiones = respuesta.results.map((region: any) => {
-                        // Normalizar el nombre para la ruta de la imagen
                         const nombreImagen = region.name
                             .toLowerCase()
                             .trim()
                             .replace(/\s+/g, '-');
-
                         return {
                             ...region,
                             image: `assets/images/locations/${nombreImagen}.png`
                         };
                     });
-                    
-                    // Forzar la detección de cambios
-                    this.cdr.detectChanges();
-                    
-                    console.log('Regiones cargadas:', this.regiones.length);
+                    this.cdr.detectChanges();                    
                 },
                 error: (error) => {
                     console.error('Error al cargar regiones:', error);
@@ -55,12 +49,10 @@ export class RegionesComponent implements OnInit {
     }
 
     onImageError(event: any, regionName: string): void {
-        // Evitar loops infinitos si la imagen de fallback también falla
         if (event.target.src.includes('pokeApi.png')) {
             console.error('Imagen de fallback también falló');
             return;
-        }
-        
+        }        
         console.warn(`Error cargando imagen: ${regionName}`);
         event.target.src = 'assets/images/pokeApi.png';
     }
