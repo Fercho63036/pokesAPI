@@ -13,18 +13,16 @@
         <!-- Grid de Regiones -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @for (region of regiones; track region.name) {
-                <div class="group cursor-pointer">
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl">
+                <div class="cursor-pointer">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
                         <!-- Imagen -->
                         <div class="relative h-48 bg-gradient-to-br from-blue-400 to-purple-500 overflow-hidden">
                             <img 
                                 [src]="region.image" 
                                 [alt]="region.name"
                                 (error)="onImageError($event, region.name)"
-                                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                                class="w-full h-full object-cover"
                             >
-                            <!-- Overlay en hover -->
-                            <div class="absolute inset-0 bg-black opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
                         </div>
                         
                         <!-- Contenido -->
@@ -36,7 +34,7 @@
                                 <span class="text-sm text-gray-500">
                                     Región #{{ region.url.split('/')[6] }}
                                 </span>
-                                <svg class="w-6 h-6 text-blue-500 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                                 </svg>
                             </div>

@@ -31,20 +31,16 @@ export class RegionesComponent implements OnInit {
                     this.regiones = respuesta.results.map((region: any) => ({
                         ...region,
                         image: `assets/images/locations/${region.name}.png`
-                    }));
-                    
-                    console.log('Regiones cargadas:', this.regiones);
+                    }));                    
                 },
                 error: (error) => {
                     console.error('Error al cargar regiones:', error);
-                    // Aquí podrías mostrar un mensaje al usuario
                 }
             });
     }
 
     onImageError(event: any, regionName: string): void {
         console.error(`Error cargando imagen: ${regionName}`);
-        // Imagen por defecto si falla
         event.target.src = 'assets/images/pokeApi.png';
     }
 

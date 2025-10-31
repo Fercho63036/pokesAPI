@@ -70,10 +70,10 @@ export class UbicacionService {
 
     filtrarPorVersion(encuentros: EncuentroPokemon[], nombreVersion: string): EncuentroPokemon[] {
         return encuentros.map(encuentro => ({
-        ...encuentro,
-        version_details: encuentro.version_details.filter(
-            detalle => detalle.version.name === nombreVersion
-        )
+            ...encuentro,
+            version_details: encuentro.version_details.filter(
+                detalle => detalle.version.name === nombreVersion
+            )
         })).filter(encuentro => encuentro.version_details.length > 0);
     }
 }
