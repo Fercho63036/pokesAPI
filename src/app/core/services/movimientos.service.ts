@@ -1,12 +1,16 @@
+/***************************** ANGULAR CORE **********************************/
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+/***************************** RXJS ******************************************/
 import { Observable } from 'rxjs';
-import { CategoriaMovimiento, ClaseDañoMovimiento, DolenciaMovimiento, EstiloBatallaMovimiento, MetodoAprendizajeMovimiento, Movimiento, ObjetivoMovimiento } from '../models/interfaces/movimiento';
+/***************************** INTERFACES ***********************************/
+import { Movimiento, DolenciaMovimiento, EstiloBatallaMovimiento, CategoriaMovimiento, ClaseDañoMovimiento, MetodoAprendizajeMovimiento, ObjetivoMovimiento } from '../models/interfaces/movimiento';
 import { RecursoAPIConNombre } from '../models/interfaces/recurso-api-nombre';
+/***************************** CONFIGURACIÓN *********************************/
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class MovimientosService {
 
@@ -15,6 +19,8 @@ export class MovimientosService {
     constructor(
         private http: HttpClient
     ) { }
+
+    /***************************** MÉTODOS PRINCIPALES *************************/
 
     // Obtener un movimiento por ID o nombre
     obtenerMovimiento(idONombre: string | number): Observable<Movimiento> {
@@ -56,18 +62,20 @@ export class MovimientosService {
         return this.http.get<ObjetivoMovimiento>(`${this.URL_BASE}/move-target/${idONombre}/`);
     }
 
-    // Método auxiliar para obtener descripción en español
+    /***************************** MÉTODOS AUXILIARES **************************/
+
+    // Obtener descripción en español o inglés
     obtenerDescripcionEnEspañol(movimiento: Movimiento): string {
         const entradaEspañol = movimiento.effect_entries.find(
-        entrada => entrada.language.name === 'es' || entrada.language.name === 'en'
+            entrada => entrada.language.name === 'es' || entrada.language.name === 'en'
         );
         return entradaEspañol ? entradaEspañol.short_effect : 'Sin descripción disponible';
     }
 
-    // Método auxiliar para obtener nombre en español
+    // Obtener nombre en español o inglés
     obtenerNombreEnEspañol(nombres: { name: string; language: RecursoAPIConNombre }[]): string {
         const nombreEspañol = nombres.find(
-        n => n.language.name === 'es' || n.language.name === 'en'
+            n => n.language.name === 'es' || n.language.name === 'en'
         );
         return nombreEspañol ? nombreEspañol.name : 'Sin nombre';
     }

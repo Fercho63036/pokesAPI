@@ -1,29 +1,45 @@
-// berry.service.ts
+// src/app/core/services/berry.service.ts
+
+/***************************** ANGULAR CORE **********************************/
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Berry, FirmezaBerry, RespuestaAPIBerry, RespuestaAPIFirmezaBerry, RespuestaAPISaborBerry, SaborBerry } from '../models/interfaces/berry';
+
+/***************************** RXJS ******************************************/
+import { Observable, map } from 'rxjs';
+
+/***************************** INTERFACES ***********************************/
+import {
+    Berry,
+    FirmezaBerry,
+    RespuestaAPIBerry,
+    RespuestaAPIFirmezaBerry,
+    RespuestaAPISaborBerry,
+    SaborBerry
+} from '../models/interfaces/berry';
+
+/***************************** CONFIGURACIÓN *********************************/
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class BerryService {
+
+    /***************************** PROPIEDADES ********************************/
     URL_BASE = environment.apiUrl;
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {}
+
+    /***************************** MÉTODOS PRINCIPALES *************************/
 
     /**
-     * Obtiene información de una berry por ID o nombre
-     * @param idONombre ID numérico o nombre de la berry
-     * @returns Observable con los datos de la berry
+     * Obtiene información detallada de una berry por su ID o nombre.
+     * @param idONombre ID numérico o nombre de la berry.
+     * @returns Observable con los datos traducidos de la berry.
      */
     obtenerBerry(idONombre: string | number): Observable<Berry> {
-        return new Observable(observador => {
-        this.http.get<RespuestaAPIBerry>(`${this.URL_BASE}/berry/${idONombre}`)
-            .subscribe({
-            next: (respuesta) => {
-                const berryTraducida: Berry = {
+        return this.http.get<RespuestaAPIBerry>(`${this.URL_BASE}/berry/${idONombre}`).pipe(
+            map(respuesta => ({
                 id: respuesta.id,
                 nombre: respuesta.name,
                 tiempoCrecimiento: respuesta.growth_time,
@@ -39,26 +55,18 @@ export class BerryService {
                 })),
                 objeto: respuesta.item,
                 tipoRegaloNatural: respuesta.natural_gift_type
-                };
-                observador.next(berryTraducida);
-                observador.complete();
-            },
-            error: (error) => observador.error(error)
-            });
-        });
+            }))
+        );
     }
 
     /**
-     * Obtiene información de la firmeza de una berry por ID o nombre
-     * @param idONombre ID numérico o nombre de la firmeza
-     * @returns Observable con los datos de la firmeza
+     * Obtiene información de la firmeza de una berry por ID o nombre.
+     * @param idONombre ID numérico o nombre de la firmeza.
+     * @returns Observable con los datos traducidos de la firmeza.
      */
     obtenerFirmezaBerry(idONombre: string | number): Observable<FirmezaBerry> {
-        return new Observable(observador => {
-        this.http.get<RespuestaAPIFirmezaBerry>(`${this.URL_BASE}/berry-firmness/${idONombre}`)
-            .subscribe({
-            next: (respuesta) => {
-                const firmezaTraducida: FirmezaBerry = {
+        return this.http.get<RespuestaAPIFirmezaBerry>(`${this.URL_BASE}/berry-firmness/${idONombre}`).pipe(
+            map(respuesta => ({
                 id: respuesta.id,
                 nombre: respuesta.name,
                 berries: respuesta.berries,
@@ -66,26 +74,18 @@ export class BerryService {
                     nombre: n.name,
                     idioma: n.language
                 }))
-                };
-                observador.next(firmezaTraducida);
-                observador.complete();
-            },
-            error: (error) => observador.error(error)
-            });
-        });
+            }))
+        );
     }
 
     /**
-     * Obtiene información de un sabor de berry por ID o nombre
-     * @param idONombre ID numérico o nombre del sabor
-     * @returns Observable con los datos del sabor
+     * Obtiene información de un sabor de berry por ID o nombre.
+     * @param idONombre ID numérico o nombre del sabor.
+     * @returns Observable con los datos traducidos del sabor.
      */
     obtenerSaborBerry(idONombre: string | number): Observable<SaborBerry> {
-        return new Observable(observador => {
-        this.http.get<RespuestaAPISaborBerry>(`${this.URL_BASE}/berry-flavor/${idONombre}`)
-            .subscribe({
-            next: (respuesta) => {
-                const saborTraducido: SaborBerry = {
+        return this.http.get<RespuestaAPISaborBerry>(`${this.URL_BASE}/berry-flavor/${idONombre}`).pipe(
+            map(respuesta => ({
                 id: respuesta.id,
                 nombre: respuesta.name,
                 berries: respuesta.berries.map(b => ({
@@ -97,36 +97,33 @@ export class BerryService {
                     nombre: n.name,
                     idioma: n.language
                 }))
-                };
-                observador.next(saborTraducido);
-                observador.complete();
-            },
-            error: (error) => observador.error(error)
-            });
-        });
+            }))
+        );
     }
 
+    /***************************** LISTAS Y COLECCIONES *************************/
+
     /**
-     * Obtiene la lista de todas las berries disponibles
-     * @param limite Número máximo de resultados (por defecto 100)
-     * @param desplazamiento Desde qué posición empezar (por defecto 0)
-     * @returns Observable con la lista de berries
+     * Obtiene la lista paginada de todas las berries disponibles.
+     * @param limite Número máximo de resultados (por defecto 100).
+     * @param desplazamiento Posición inicial (por defecto 0).
+     * @returns Observable con la lista de berries.
      */
     obtenerListaBerries(limite: number = 100, desplazamiento: number = 0): Observable<any> {
         return this.http.get(`${this.URL_BASE}/berry?limit=${limite}&offset=${desplazamiento}`);
     }
 
     /**
-     * Obtiene la lista de todas las firmezas disponibles
-     * @returns Observable con la lista de firmezas
+     * Obtiene la lista completa de firmezas de berries.
+     * @returns Observable con todas las firmezas disponibles.
      */
     obtenerListaFirmezas(): Observable<any> {
         return this.http.get(`${this.URL_BASE}/berry-firmness`);
     }
 
     /**
-     * Obtiene la lista de todos los sabores disponibles
-     * @returns Observable con la lista de sabores
+     * Obtiene la lista completa de sabores de berries.
+     * @returns Observable con todos los sabores disponibles.
      */
     obtenerListaSabores(): Observable<any> {
         return this.http.get(`${this.URL_BASE}/berry-flavor`);

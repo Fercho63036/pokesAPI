@@ -1,18 +1,22 @@
+/***************************** ANGULAR CORE **********************************/
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+/***************************** RXJS ******************************************/
 import { Observable } from 'rxjs';
+/***************************** INTERFACES ***********************************/
 import { Maquina, RespuestaListaMaquinas } from '../models/interfaces/maquina';
+/***************************** CONFIGURACIÓN *********************************/
 import { environment } from '../../../environments/environment';
 
-
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class MaquinaService {
-    
-    URL_BASE = environment.apiUrl;
 
+    /***************************** PROPIEDADES ********************************/
+    URL_BASE = environment.apiUrl;
     constructor(private http: HttpClient) {}
+    /***************************** MÉTODOS PRINCIPALES *************************/
 
     /**
      * Obtiene una máquina específica por ID
@@ -30,20 +34,16 @@ export class MaquinaService {
      * @returns Observable con la lista de máquinas
      */
     obtenerMaquinas(limite?: number, desplazamiento?: number): Observable<RespuestaListaMaquinas> {
-        let url = this.URL_BASE;
+        let url = `${this.URL_BASE}/machine`;
         const parametros: string[] = [];
-        
-        if (limite !== undefined) {
-        parametros.push(`limit=${limite}`);
-        }
-        if (desplazamiento !== undefined) {
-        parametros.push(`offset=${desplazamiento}`);
-        }
-        
+
+        if (limite !== undefined) parametros.push(`limit=${limite}`);
+        if (desplazamiento !== undefined) parametros.push(`offset=${desplazamiento}`);
+
         if (parametros.length > 0) {
-        url += `?${parametros.join('&')}`;
+            url += `?${parametros.join('&')}`;
         }
-        
+
         return this.http.get<RespuestaListaMaquinas>(url);
     }
 
