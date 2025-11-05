@@ -1,1 +1,118 @@
-<h1>Tarjeta Baya</h1>
+<div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+    
+    <div *ngIf="cargando" class="p-6 animate-pulse">
+        <div class="w-24 h-24 bg-gray-200 rounded-full mx-auto mb-4"></div>
+        <div class="h-6 bg-gray-200 rounded mb-3"></div>
+        <div class="h-4 bg-gray-200 rounded mb-2"></div>
+        <div class="h-4 bg-gray-200 rounded w-3/4"></div>
+    </div>
+
+    <div *ngIf="error && !cargando" class="p-6 text-center">
+        <div class="text-4xl mb-3">❌</div>
+        <p class="text-gray-600 text-sm">Error al cargar</p>
+        <button 
+            (click)="cargarBaya()"
+            class="mt-3 px-4 py-2 bg-red-100 text-red-700 rounded-lg text-sm hover:bg-red-200 transition-colors"
+        >
+            Reintentar
+        </button>
+    </div>
+
+    <div *ngIf="baya && !cargando && !error" class="p-6">
+        
+        <div class="relative mb-4">
+            <div class="w-24 h-24 mx-auto bg-gradient-to-br from-pink-100 to-purple-100 rounded-full flex items-center justify-center shadow-md">
+                <img 
+                    [src]="obtenerImagenBaya()" 
+                    [alt]="formatearNombre(baya.nombre)"
+                    class="w-20 h-20 object-contain"
+                    (error)="$event.target.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png'"
+                />
+            </div>
+            <div class="absolute top-0 right-0 bg-purple-600 text-white text-xs font-bold px-2 py-1 rounded-full">
+                #{{ idBaya }}
+            </div>
+        </div>
+
+        <h3 class="text-xl font-bold text-gray-800 text-center mb-3">
+            {{ formatearNombre(baya.nombre) }}
+        </h3>
+
+        <div class="flex justify-center mb-4">
+            <span [ngClass]="obtenerColorFirmeza()" 
+                  class="px-3 py-1 rounded-full text-xs font-semibold">
+                {{ formatearNombre(baya.firmeza.name) }}
+            </span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-gray-500 text-xs mb-1">Tamaño</div>
+                <div class="text-gray-800 font-bold">{{ baya.tamano }} mm</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-gray-500 text-xs mb-1">Crecimiento</div>
+                <div class="text-gray-800 font-bold">{{ calcularTiempoCrecimiento() }}</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-gray-500 text-xs mb-1">Cosecha</div>
+                <div class="text-gray-800 font-bold">{{ baya.cosechaMaxima }}</div>
+            </div>
+            <div class="bg-gray-50 rounded-lg p-3 text-center">
+                <div class="text-gray-500 text-xs mb-1">Suavidad</div>
+                <div class="text-gray-800 font-bold">{{ baya.suavidad }}</div>
+            </div>
+        </div>
+
+        <div *ngIf="obtenerSaboresActivos().length > 0" class="mb-4">
+            <div class="text-xs text-gray-500 font-semibold mb-2 text-center">Sabores</div>
+            <div class="flex flex-wrap justify-center gap-2">
+                <span 
+                    *ngFor="let sabor of obtenerSaboresActivos()"
+                    class="inline-flex items-center px-2 py-1 bg-gradient-to-r from-yellow-100 to-orange-100 text-orange-700 rounded-full text-xs font-medium"
+                >
+                    {{ obtenerEmojiSabor(sabor.sabor.name) }}
+                    <span class="ml-1">{{ sabor.potencia }}</span>
+                </span>
+            </div>
+        </div>
+
+        <button 
+            (click)="toggleDetalles()"
+            class="w-full py-2 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-semibold rounded-lg hover:from-pink-600 hover:to-purple-700 transition-all duration-200 text-sm shadow-md"
+        >
+            {{ mostrarDetalles ? 'Ocultar detalles' : 'Ver detalles' }} 
+            <span class="ml-1">{{ mostrarDetalles ? '▲' : '▼' }}</span>
+        </button>
+
+        <div *ngIf="mostrarDetalles" class="mt-4 pt-4 border-t border-gray-200 space-y-3 text-sm">
+            
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600">Poder regalo natural:</span>
+                <span class="font-bold text-gray-800">{{ baya.poderRegaloNatural }}</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+                <span class="text-gray-600">Sequedad del suelo:</span>
+                <span class="font-bold text-gray-800">{{ baya.sequedadSuelo }}</span>
+            </div>
+
+            <div *ngIf="baya.tipoRegaloNatural" class="flex justify-between items-center">
+                <span class="text-gray-600">Tipo regalo:</span>
+                <span class="font-bold text-gray-800 capitalize">
+                    {{ formatearNombre(baya.tipoRegaloNatural.name) }}
+                </span>
+            </div>
+
+            <div *ngIf="baya.objeto" class="mt-3 p-3 bg-blue-50 rounded-lg">
+                <div class="text-xs text-blue-600 font-semibold mb-1">Objeto asociado</div>
+                <div class="text-blue-800 font-medium capitalize">
+                    {{ formatearNombre(baya.objeto.name) }}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

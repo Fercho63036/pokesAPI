@@ -32,32 +32,32 @@ export class BerryService {
 
     /***************************** MÉTODOS PRINCIPALES *************************/
 
-    /**
-     * Obtiene información detallada de una berry por su ID o nombre.
-     * @param idONombre ID numérico o nombre de la berry.
-     * @returns Observable con los datos traducidos de la berry.
-     */
-    obtenerBerry(idONombre: string | number): Observable<Berry> {
-        return this.http.get<RespuestaAPIBerry>(`${this.URL_BASE}/berry/${idONombre}`).pipe(
-            map(respuesta => ({
-                id: respuesta.id,
-                nombre: respuesta.name,
-                tiempoCrecimiento: respuesta.growth_time,
-                cosechaMaxima: respuesta.max_harvest,
-                poderRegaloNatural: respuesta.natural_gift_power,
-                tamaño: respuesta.size,
-                suavidad: respuesta.smoothness,
-                sequedadSuelo: respuesta.soil_dryness,
-                firmeza: respuesta.firmness,
-                sabores: respuesta.flavors.map(f => ({
-                    potencia: f.potency,
-                    sabor: f.flavor
-                })),
-                objeto: respuesta.item,
-                tipoRegaloNatural: respuesta.natural_gift_type
-            }))
-        );
-    }
+/**
+ * Obtiene información detallada de una berry por su ID o nombre.
+ * @param idONombre ID numérico o nombre de la berry.
+ * @returns Observable con los datos traducidos de la berry.
+ */
+obtenerBerry(idONombre: string | number): Observable<Berry> {
+    return this.http.get<RespuestaAPIBerry>(`${this.URL_BASE}/berry/${idONombre}`).pipe(
+        map(respuesta => ({
+            id: respuesta.id,
+            nombre: respuesta.name,
+            tiempoCrecimiento: respuesta.growth_time,
+            cosechaMaxima: respuesta.max_harvest,
+            poderRegaloNatural: respuesta.natural_gift_power,
+            tamano: respuesta.size,  // ✅ Cambiado de tamaño a tamano
+            suavidad: respuesta.smoothness,
+            sequedadSuelo: respuesta.soil_dryness,
+            firmeza: respuesta.firmness,
+            sabores: respuesta.flavors.map(f => ({
+                potencia: f.potency,
+                sabor: f.flavor
+            })),
+            objeto: respuesta.item,
+            tipoRegaloNatural: respuesta.natural_gift_type
+        }))
+    );
+}
 
     /**
      * Obtiene información de la firmeza de una berry por ID o nombre.
