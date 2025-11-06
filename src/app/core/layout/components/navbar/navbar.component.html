@@ -73,6 +73,16 @@
         </svg>
         <span class="hidden lg:inline">Favoritos</span>
       </a>
+      <a 
+        routerLink="/bayas"
+        routerLinkActive="bg-red-600 text-white"
+        class="flex flex-1 items-center justify-center gap-1.5 px-2 lg:px-3 py-1.5 lg:py-2 rounded-md text-sm lg:text-base font-medium text-white hover:bg-red-600 transition-colors whitespace-nowrap"
+      >
+        <svg class="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+        <span class="hidden lg:inline">Bayas</span>
+      </a>
     </div>
 
     <!-- Mobile Navigation (below md) -->
@@ -179,6 +189,17 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
               <span>Favoritos</span>
+            </a>
+            <a 
+              routerLink="/bayas"
+              (click)="cerrarMenu()"
+              routerLinkActive="bg-red-600 text-white ring-2 ring-white/30"
+              class="flex flex-col items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-medium text-white hover:bg-red-600 transition-all active:scale-95"
+            >
+              <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+              <span>Bayas</span>
             </a>
           </div>
         </div>
